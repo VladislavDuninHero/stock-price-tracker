@@ -1,0 +1,121 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: none;
+    font: 1.2rem "Roboto Light", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    padding: 5px;
+    height: 100vh;
+    background-image: none; /*нужен фон*/
+    background-size: cover;
+    background-position: center;
+}
+
+.main-login-page {
+    display: flex;
+    color: black;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    min-width: 20rem;
+    border-radius: 20px;
+    padding: 10px;
+    min-height: 6rem;
+}
+
+.login-form__error-container {
+    color: red;
+    text-align: center;
+    margin: 5px;
+}
+
+.login-form__login-form-label {
+    text-align: center;
+    font-size: larger;
+}
+
+.main-login-page__login-form {
+    display: flex;
+    margin: 10px;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.input-field {
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    min-height: 2.5rem;
+    border: 1px solid black;
+}
+.login-form__login-field {
+
+}
+.password-form__login-field {
+
+}
+
+.footer-login-page__user-link {
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: white;
+}
+.footer-login-page__user-link:hover {
+    color: yellow;
+}
+
+.login-form__login-button {
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+    min-height: 3rem;
+    background-color: #01dafc;
+    box-shadow: 0 4px 10px black;
+}
+.login-form__login-button:active {
+    transform: scale(0.9);
+}
+.login-form__login-button:hover {
+    background-color: #54a1e1;
+    transition: ease-in-out 0.2s all;
+}
+
+.header-login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form__login-form-controllers {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+    padding: 5px;
+}

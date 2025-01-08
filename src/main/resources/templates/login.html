@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/login.css}">
+    <title>Stock price tracker</title>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header-login-page"></header>
+        <main class="main-login-page">
+            <form class="main-login-page__login-form" method="post">
+                <label class="login-form__login-form-label">Login</label>
+                <input class="input-field login-form__login-field" id="username" name="username" placeholder="login"/>
+                <input class="input-field login-form__password-field" id="password" name="password" placeholder="password"/>
+                <article class="login-form__login-form-controllers">
+                    <button class="login-form__login-button">Submit</button>
+                    <a href="registration">Sign up</a>
+                </article>
+                <div class="login-form__error-container" th:if="${param.error}">
+                    Invalid login or password
+                </div>
+            </form>
+        </main>
+        <footer class="footer-login-page">
+            <a href="https://t.me/VladislavDunin" class="footer-login-page__user-link">@VladislavDunin</a>
+            <a href="mailto:vladislavdunin.java@gmail.com" class="footer-login-page__user-link">vladislavdunin.java@gmail.com</a>
+        </footer>
+    </div>
+</body>
+</html>
