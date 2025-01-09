@@ -6,6 +6,4 @@ public final class Routes {
     public static final String LOGIN_ROUTE = "/login";
     public static final String REGISTRATION_ROUTE = "/registration";
     public static final String API_USER_ROUTE = "/api/v1/user";
-    public static final String API_USER_REGISTRATION_ROUTE = "/api/v1/user/registration";
-    public static final String LOGOUT_ROUTE = "/logout";
 }

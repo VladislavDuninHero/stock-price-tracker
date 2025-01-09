@@ -1,4 +1,4 @@
-package com.pet.stock_price_tracker.service.security.impl;
+package com.pet.stock_price_tracker.service.security.detail.impl;
 
 import com.pet.stock_price_tracker.entity.User;
 import com.pet.stock_price_tracker.repository.UserRepository;

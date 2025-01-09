@@ -4,12 +4,10 @@ import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.user.UserDTO;
 import com.pet.stock_price_tracker.dto.user.UserResponseDTO;
 import com.pet.stock_price_tracker.service.user.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 

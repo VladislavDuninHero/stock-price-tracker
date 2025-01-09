@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDTO {
-    private Long id;
-    private String login;
-    private JwtDTO jwtDTO;
+public class JwtDTO {
+    private String accessToken;
+    private String refreshToken;
 }

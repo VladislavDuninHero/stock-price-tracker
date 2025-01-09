@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,16 +41,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, Routes.REGISTRATION_ROUTE).permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin(login -> login
-                        .loginPage(Routes.LOGIN_ROUTE)
-                        .defaultSuccessUrl(Routes.HOME_ROUTE)
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl(Routes.LOGOUT_ROUTE)
-                        .logoutSuccessUrl(Routes.LOGIN_ROUTE)
-                        .deleteCookies(Cookies.JSESSIONID)
-                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 

@@ -1,0 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: none;
+    font: 1.2rem "Roboto Light", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
