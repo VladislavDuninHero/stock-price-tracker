@@ -1,4 +1,4 @@
-package com.pet.stock_price_tracker.dto.user;
+package com.pet.stock_price_tracker.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

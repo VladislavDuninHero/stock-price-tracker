@@ -1,7 +1,7 @@
 package com.pet.stock_price_tracker.service.utils.mapping;
 
-import com.pet.stock_price_tracker.dto.user.UserDTO;
-import com.pet.stock_price_tracker.dto.user.UserResponseDTO;
+import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
+import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
 import com.pet.stock_price_tracker.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

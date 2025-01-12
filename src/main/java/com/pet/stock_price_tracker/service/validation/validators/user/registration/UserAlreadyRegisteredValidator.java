@@ -1,7 +1,7 @@
-package com.pet.stock_price_tracker.service.validation.validators.user;
+package com.pet.stock_price_tracker.service.validation.validators.user.registration;
 
 import com.pet.stock_price_tracker.constants.ExceptionMessage;
-import com.pet.stock_price_tracker.dto.user.UserDTO;
+import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.exception.UserIsAlreadyRegisteredException;
 import com.pet.stock_price_tracker.repository.UserRepository;
 import com.pet.stock_price_tracker.service.validation.validators.BaseValidator;

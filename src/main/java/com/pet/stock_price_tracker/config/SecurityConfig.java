@@ -1,12 +1,15 @@
 package com.pet.stock_price_tracker.config;
 
+import com.pet.stock_price_tracker.config.filter.JwtAuthenticationFilter;
 import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.Routes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -15,21 +18,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(CsrfConfigurer::disable)
+
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
@@ -37,10 +41,13 @@ public class SecurityConfig {
                                         "/js/**",
                                         "/images/**"
                                 ).permitAll()
-                                .requestMatchers(HttpMethod.POST, Routes.API_USER_ROUTE).permitAll()
-                                .requestMatchers(HttpMethod.GET, Routes.REGISTRATION_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.POST, Routes.API_USER_LOGIN_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.POST, Routes.API_USER_REGISTRATION_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.POST, Routes.API_USER_REFRESH_TOKEN_ROUTE).permitAll()
                                 .anyRequest().authenticated()
                 )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
@@ -48,15 +55,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService);
-
-        return provider;
     }
 
 }

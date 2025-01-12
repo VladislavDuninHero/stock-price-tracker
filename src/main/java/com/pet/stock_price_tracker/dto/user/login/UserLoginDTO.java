@@ -1,4 +1,4 @@
-package com.pet.stock_price_tracker.dto.user;
+package com.pet.stock_price_tracker.dto.user.login;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,15 +12,15 @@ import org.hibernate.validator.constraints.Length;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserLoginDTO {
 
-    @Length(min = 1, max = 64)
     @NotNull
     @NotEmpty
+    @Length(min = 1, max = 64)
     private String login;
 
-    @Length(min = 6, max = 64)
     @NotNull
     @NotEmpty
+    @Length(min = 6, max = 64)
     private String password;
 }

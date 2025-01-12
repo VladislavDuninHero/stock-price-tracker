@@ -5,5 +5,9 @@ public final class Routes {
     public static final String HOME_ROUTE = "/";
     public static final String LOGIN_ROUTE = "/login";
     public static final String REGISTRATION_ROUTE = "/registration";
+    public static final String REFRESH_TOKEN_ROUTE = "/refresh";
+    public static final String API_USER_REGISTRATION_ROUTE = "/api/v1/user/registration";
+    public static final String API_USER_LOGIN_ROUTE = "/api/v1/user/login";
+    public static final String API_USER_REFRESH_TOKEN_ROUTE = "/api/v1/user/refresh";
     public static final String API_USER_ROUTE = "/api/v1/user";
 }
