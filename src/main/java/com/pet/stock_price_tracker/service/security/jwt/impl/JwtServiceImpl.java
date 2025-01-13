@@ -45,7 +45,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public Claims extractClaims(String token) {
+    public Claims validateToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(jwtSecretProperties.getSecretKey())
                 .build()
@@ -54,15 +54,8 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public boolean validateToken(String token, UserDetails userDetails) {
-        String login = extractClaims(token).getSubject();
-
-        return userDetails.getUsername().equals(login);
-    }
-
-    @Override
     public String refreshAccessToken(String refreshToken) {
-        Claims claims = extractClaims(refreshToken);
+        Claims claims = validateToken(refreshToken);
         String login = claims.getSubject();
 
         return generateAccessToken(login);
