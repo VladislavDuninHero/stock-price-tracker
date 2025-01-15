@@ -7,7 +7,6 @@ import com.pet.stock_price_tracker.enums.ErrorCode;
 import com.pet.stock_price_tracker.exception.UserIsAlreadyRegisteredException;
 import com.pet.stock_price_tracker.exception.UserNotFoundException;
 import com.pet.stock_price_tracker.exception.UserPasswordIsInvalid;
-import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
