@@ -1,6 +1,7 @@
 package com.pet.stock_price_tracker.config.filter;
 
 import com.pet.stock_price_tracker.constants.OfficialProperties;
+import com.pet.stock_price_tracker.exception.ExpiredJwtTokenException;
 import com.pet.stock_price_tracker.service.security.detail.impl.UserDetailsServiceImpl;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
@@ -56,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new ExpiredJwtTokenException(e.getLocalizedMessage());
             }
 
         }

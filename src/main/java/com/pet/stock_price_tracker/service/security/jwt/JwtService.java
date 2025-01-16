@@ -9,4 +9,5 @@ public interface JwtService {
     String generateRefreshToken(String login);
     Claims validateToken(String token);
     String refreshAccessToken(String refreshToken);
+    String getLoginFromToken(String token);
 }
