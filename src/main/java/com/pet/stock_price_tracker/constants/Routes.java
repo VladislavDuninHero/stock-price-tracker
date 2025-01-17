@@ -12,5 +12,7 @@ public final class Routes {
     public static final String API_USER_REFRESH_TOKEN_ROUTE = "/api/v1/user/refresh";
     public static final String API_USER_ROUTE = "/api/v1/user";
 
+    public static final String API_V1_TRACKER_ROUTE = "/api/v1/tracker";
     public static final String STOCK_TICKER_SAVE_ROUTE = "/save";
+    public static final String STOCK_TICKER_GET_SAVED_ROUTE = "/saved";
 }

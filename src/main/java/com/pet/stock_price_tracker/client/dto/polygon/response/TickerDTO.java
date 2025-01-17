@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TickerDTO {
-    private String id;
     private String ticker;
     private List<TickerDataDTO> data;
 }

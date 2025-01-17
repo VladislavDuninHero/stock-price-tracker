@@ -1,7 +1,6 @@
 package com.pet.stock_price_tracker.service.integration.service.impl;
 
 import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
-import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerIntegrationResponseDTO;
 import com.pet.stock_price_tracker.client.polygon.Polygon;
 import com.pet.stock_price_tracker.enums.SortedType;
@@ -11,7 +10,6 @@ import com.pet.stock_price_tracker.properties.PolygonIntegrationProperties;
 import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -35,7 +33,7 @@ public class PolygonIntegrationService implements PolygonService {
         String timespan = TimespanType.DAY.name().toLowerCase();
         String from = tickerRequestDTO.getStart().format(dateFormatter);
         String to = tickerRequestDTO.getEnd().format(dateFormatter);
-        boolean adjusted = true;
+        boolean adjusted = Boolean.TRUE;
         String sort = SortedType.ASC.name().toLowerCase();
         String apiKey = polygonIntegrationProperties.getApiKey();
 

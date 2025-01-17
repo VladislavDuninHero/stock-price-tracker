@@ -13,9 +13,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TickerDataDTO {
+    private LocalDate date;
     private BigDecimal open;
     private BigDecimal close;
     private BigDecimal highest;
     private BigDecimal lowest;
-    private LocalDate date;
 }

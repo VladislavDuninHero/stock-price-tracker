@@ -1,16 +1,20 @@
 package com.pet.stock_price_tracker.controller.tracker;
 
 import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
+import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDTO;
+import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.constants.Routes;
+import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/tracker")
+@RequestMapping(Routes.API_V1_TRACKER_ROUTE)
 public class StockTrackerController {
 
     private final TickerService tickerService;
@@ -20,10 +24,16 @@ public class StockTrackerController {
     }
 
     @PostMapping(Routes.STOCK_TICKER_SAVE_ROUTE)
-    public ResponseEntity<Void> save(@Validated @RequestBody TickerRequestDTO tickerRequestDTO) {
+    public ResponseEntity<MessageDTO> save(@Validated @RequestBody TickerRequestDTO tickerRequestDTO) {
         tickerService.save(tickerRequestDTO);
 
-        return ResponseEntity.created(URI.create("")).build();
+        return ResponseEntity.ok(new MessageDTO(Message.SUCCESS_MESSAGE));
     }
 
+    @GetMapping(Routes.STOCK_TICKER_GET_SAVED_ROUTE)
+    public ResponseEntity<TickerDTO> getSaved(@RequestParam String symbol) {
+        TickerDTO tickerDTO = tickerService.getSavedTickers(symbol);
+
+        return ResponseEntity.ok(tickerDTO);
+    }
 }

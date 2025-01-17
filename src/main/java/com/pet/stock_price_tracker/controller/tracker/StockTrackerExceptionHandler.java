@@ -4,6 +4,7 @@ import com.pet.stock_price_tracker.dto.error.FieldErrorDTO;
 import com.pet.stock_price_tracker.dto.error.TrackerErrorDTO;
 import com.pet.stock_price_tracker.dto.error.ValidationErrorDTO;
 import com.pet.stock_price_tracker.enums.ErrorCode;
+import com.pet.stock_price_tracker.exception.DateValidationException;
 import com.pet.stock_price_tracker.exception.IntegrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,6 +40,15 @@ public class StockTrackerExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ValidationErrorDTO<TrackerErrorDTO> onIntegrationException(IntegrationException ex) {
         TrackerErrorDTO trackerErrorDTO = new TrackerErrorDTO(ErrorCode.INTEGRATION_REQUEST_ERROR.name(), ex.getMessage());
+
+        return new ValidationErrorDTO<>(List.of(trackerErrorDTO));
+    }
+
+    @ExceptionHandler(DateValidationException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationErrorDTO<TrackerErrorDTO> onDateValidationException(DateValidationException ex) {
+        TrackerErrorDTO trackerErrorDTO = new TrackerErrorDTO(ErrorCode.VALIDATION_ERROR.name(), ex.getMessage());
 
         return new ValidationErrorDTO<>(List.of(trackerErrorDTO));
     }

@@ -1,21 +1,26 @@
 package com.pet.stock_price_tracker.config.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
-import com.pet.stock_price_tracker.exception.ExpiredJwtTokenException;
-import com.pet.stock_price_tracker.service.security.detail.impl.UserDetailsServiceImpl;
+import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
+import com.pet.stock_price_tracker.enums.ErrorCode;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -25,9 +30,11 @@ import java.util.Collections;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final ObjectMapper objectMapper;
 
-    public JwtAuthenticationFilter(JwtService jwtService) {
+    public JwtAuthenticationFilter(JwtService jwtService, ObjectMapper objectMapper) {
         this.jwtService = jwtService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -57,13 +64,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             } catch (Exception e) {
-                throw new ExpiredJwtTokenException(e.getLocalizedMessage());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
+                response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+                return;
             }
 
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            UserErrorDTO userErrorDTO = new UserErrorDTO(
+                    ErrorCode.AUTHORIZATION_HEADER_IS_MISSING.name(),
+                    ExceptionMessage.AUTHORIZATION_HEADER_IS_MISSING_EXCEPTION
+            );
+            response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+            return;
         }
 
         filterChain.doFilter(request, response);
-
     }
 
 }

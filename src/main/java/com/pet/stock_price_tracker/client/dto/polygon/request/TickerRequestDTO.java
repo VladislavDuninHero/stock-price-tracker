@@ -1,5 +1,8 @@
 package com.pet.stock_price_tracker.client.dto.polygon.request;
 
+import com.pet.stock_price_tracker.constants.ExceptionMessage;
+import com.pet.stock_price_tracker.enums.TickerSymbol;
+import com.pet.stock_price_tracker.service.validation.annotation.EnumValidate;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,6 +20,7 @@ public class TickerRequestDTO {
 
     @NotNull
     @NotEmpty
+    @EnumValidate(enumClass = TickerSymbol.class, message = ExceptionMessage.TICKER_NOT_FOUND_EXCEPTION)
     private String ticker;
 
     @NotNull

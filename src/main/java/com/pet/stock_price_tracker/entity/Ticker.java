@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -38,6 +39,29 @@ public class Ticker {
     @Column(name = "lowest")
     private BigDecimal lowest;
 
+    @Column(name = "ticker")
+    private String ticker;
+
     @Column(name = "date")
     private LocalDate date;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticker ticker1 = (Ticker) o;
+        return Objects.equals(id, ticker1.id)
+                && Objects.equals(userId, ticker1.userId)
+                && Objects.equals(open, ticker1.open)
+                && Objects.equals(close, ticker1.close)
+                && Objects.equals(highest, ticker1.highest)
+                && Objects.equals(lowest, ticker1.lowest)
+                && Objects.equals(ticker, ticker1.ticker)
+                && Objects.equals(date, ticker1.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, open, close, highest, lowest, ticker, date);
+    }
 }

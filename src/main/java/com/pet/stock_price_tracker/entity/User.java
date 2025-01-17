@@ -9,8 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,7 +39,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ticker> tickers;
+    private Set<Ticker> tickers;
 
     @Override
     public boolean equals(Object o) {

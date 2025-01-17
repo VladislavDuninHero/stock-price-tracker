@@ -23,10 +23,19 @@ public class GlobalExceptionHandler {
         return new ValidationErrorDTO<>(List.of(userErrorDTO));
     }
 
-    @ExceptionHandler(ExpiredJwtTokenException.class)
+    @ExceptionHandler(ExpiredJwtException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ValidationErrorDTO<UserErrorDTO> onExpiredJwtException(ExpiredJwtException ex) {
+        UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), ex.getLocalizedMessage());
+
+        return new ValidationErrorDTO<>(List.of(userErrorDTO));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ValidationErrorDTO<UserErrorDTO> onExpiredJwtException(RuntimeException ex) {
         UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), ex.getLocalizedMessage());
 
         return new ValidationErrorDTO<>(List.of(userErrorDTO));

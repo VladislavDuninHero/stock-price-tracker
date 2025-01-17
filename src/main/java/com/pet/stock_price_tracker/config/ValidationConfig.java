@@ -1,5 +1,6 @@
 package com.pet.stock_price_tracker.config;
 
+import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.service.validation.config.ValidationConfigurable;
@@ -18,16 +19,19 @@ public class ValidationConfig {
 
     private final List<BaseValidator<UserDTO>> userRegistrationValidators;
     private final List<BaseValidator<UserLoginDTO>> userLoginValidators;
+    private final List<BaseValidator<TickerRequestDTO>> tickerRequestValidators;
 
     public ValidationConfig(
             ValidationConfigurable configurator,
             List<BaseValidator<UserDTO>> userRegistrationValidators,
-            List<BaseValidator<UserLoginDTO>> userLoginValidators
+            List<BaseValidator<UserLoginDTO>> userLoginValidators,
+            List<BaseValidator<TickerRequestDTO>> tickerRequestValidators
     ) {
         this.configurator = configurator;
 
         this.userRegistrationValidators = userRegistrationValidators;
         this.userLoginValidators = userLoginValidators;
+        this.tickerRequestValidators = tickerRequestValidators;
     }
 
     @Bean
@@ -46,5 +50,14 @@ public class ValidationConfig {
         }
 
         return userLoginValidators;
+    }
+
+    @Bean
+    public List<BaseValidator<TickerRequestDTO>> configurateTickerRequestValidators() {
+        for (int i = 1; i < tickerRequestValidators.size(); i++) {
+            tickerRequestValidators.get(i - 1).setNext(tickerRequestValidators.get(i));
+        }
+
+        return tickerRequestValidators;
     }
 }
