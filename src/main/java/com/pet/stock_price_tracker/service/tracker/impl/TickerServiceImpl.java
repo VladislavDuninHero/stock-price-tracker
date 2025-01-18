@@ -4,10 +4,8 @@ import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDataDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerIntegrationResponseDTO;
-import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.entity.Ticker;
 import com.pet.stock_price_tracker.entity.User;
-import com.pet.stock_price_tracker.exception.TickerNotFoundException;
 import com.pet.stock_price_tracker.exception.UserNotFoundException;
 import com.pet.stock_price_tracker.repository.TickerRepository;
 import com.pet.stock_price_tracker.repository.UserRepository;
@@ -15,16 +13,11 @@ import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
 import com.pet.stock_price_tracker.service.utils.mapping.TickerMapper;
 import com.pet.stock_price_tracker.service.validation.manager.impl.TickerRequestValidationManager;
-import jakarta.persistence.Entity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TickerServiceImpl implements TickerService {

@@ -1,6 +1,5 @@
 package com.pet.stock_price_tracker.client.polygon;
 
-import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerIntegrationResponseDTO;
 import com.pet.stock_price_tracker.constants.PolygonIntegrationEndpoint;
 import org.springframework.cloud.openfeign.FeignClient;

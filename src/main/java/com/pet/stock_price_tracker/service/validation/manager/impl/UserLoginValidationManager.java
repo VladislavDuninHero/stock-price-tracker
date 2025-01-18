@@ -3,7 +3,6 @@ package com.pet.stock_price_tracker.service.validation.manager.impl;
 import com.pet.stock_price_tracker.config.ValidationConfig;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.service.validation.manager.ValidationManager;
-import com.pet.stock_price_tracker.service.validation.validators.Validator;
 import org.springframework.stereotype.Service;
 
 @Service
