@@ -40,7 +40,10 @@ public class UserControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ValidationErrorDTO<UserErrorDTO> onUserIsAlreadyRegistered(UserIsAlreadyRegisteredException ex) {
-        UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.USER_IS_ALREADY_EXISTS.name(), ex.getLocalizedMessage());
+        UserErrorDTO userErrorDTO = new UserErrorDTO(
+                ErrorCode.USER_IS_ALREADY_EXISTS.name(),
+                ex.getLocalizedMessage()
+        );
 
         return new ValidationErrorDTO<>(List.of(userErrorDTO));
     }

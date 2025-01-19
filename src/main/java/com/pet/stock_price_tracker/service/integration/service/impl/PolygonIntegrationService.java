@@ -28,7 +28,10 @@ public class PolygonIntegrationService implements PolygonService {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        int multiplier = tickerRequestDTO.getEnd().getDayOfMonth() - tickerRequestDTO.getStart().getDayOfMonth();
+        int multiplier =
+                tickerRequestDTO.getEnd().getDayOfMonth() - tickerRequestDTO.getStart().getDayOfMonth() <= 0
+                        ? 1
+                        : tickerRequestDTO.getEnd().getDayOfMonth() - tickerRequestDTO.getStart().getDayOfMonth();
         String ticker = tickerRequestDTO.getTicker();
         String timespan = TimespanType.DAY.name().toLowerCase();
         String from = tickerRequestDTO.getStart().format(dateFormatter);

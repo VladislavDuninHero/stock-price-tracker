@@ -3,10 +3,12 @@ package com.pet.stock_price_tracker.config.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
+import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
 import com.pet.stock_price_tracker.enums.ErrorCode;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
 
-            } catch (Exception e) {
+            } catch (ExpiredJwtException e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                 UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
@@ -68,8 +70,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 return;
             }
-
-        } else {
+        } else if (
+                !request.getServletPath().equalsIgnoreCase(Routes.API_USER_LOGIN_ROUTE)
+                && !request.getServletPath().equalsIgnoreCase(Routes.API_USER_REGISTRATION_ROUTE)
+                && !request.getServletPath().isEmpty()
+        ) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             UserErrorDTO userErrorDTO = new UserErrorDTO(
