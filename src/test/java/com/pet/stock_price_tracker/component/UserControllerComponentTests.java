@@ -35,8 +35,8 @@ public class UserControllerComponentTests {
     void user_CreateWithValidData_ReturnsValidResponseEntity() throws Exception {
         //given
         UserDTO userDTO = new UserDTO(
-                "testuser",
-                "testpass"
+                "createuserlogin",
+                "createuserpass"
         );
         String json = objectMapper.writeValueAsString(userDTO);
         var builder = MockMvcRequestBuilders

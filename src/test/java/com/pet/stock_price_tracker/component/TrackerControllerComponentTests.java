@@ -38,12 +38,12 @@ public class TrackerControllerComponentTests {
 
 
     @Test
-    @WithMockUser(username = "testuser")
+    @WithMockUser(username = "savetickeruserlogin")
     public void tracker_SaveTickersWithValidData_ReturnsValidEntity() throws Exception {
         //given
         UserDTO userDTO = new UserDTO(
-                "testuser",
-                "testpassword"
+                "savetickeruserlogin",
+                "savetickeruserpass"
         );
         String user = objectMapper.writeValueAsString(userDTO);
         var userRegistrationBuilder = MockMvcRequestBuilders
@@ -72,12 +72,12 @@ public class TrackerControllerComponentTests {
     }
 
     @Test
-    @WithMockUser(username = "testuser")
+    @WithMockUser(username = "savedtickeruserlogin")
     public void tracker_GetSavedTickers_ReturnsValidEntity() throws Exception {
         //given
         UserDTO userDTO = new UserDTO(
-                "testuser",
-                "testpassword"
+                "savedtickeruserlogin",
+                "savedtickeruserpass"
         );
         String user = objectMapper.writeValueAsString(userDTO);
         var userRegistrationBuilder = MockMvcRequestBuilders
