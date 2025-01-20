@@ -9,6 +9,7 @@ import com.pet.stock_price_tracker.entity.User;
 import com.pet.stock_price_tracker.exception.UserNotFoundException;
 import com.pet.stock_price_tracker.repository.TickerRepository;
 import com.pet.stock_price_tracker.repository.UserRepository;
+import com.pet.stock_price_tracker.security.SecurityUser;
 import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
 import com.pet.stock_price_tracker.service.utils.mapping.TickerMapper;
@@ -48,32 +49,38 @@ public class TickerServiceImpl implements TickerService {
 
         TickerIntegrationResponseDTO tickerIntegrationResponseDTO = polygonService.save(tickerRequestDTO);
 
-        String login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        User user = userRepository.findUserByLogin(login).orElseThrow(() -> new UserNotFoundException(login));
+        if (tickerIntegrationResponseDTO.getResults() != null) {
+            String login = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        List<LocalDate> dates = user.getTickers().stream()
-                .filter(d -> d.getTicker().equalsIgnoreCase(tickerIntegrationResponseDTO.getTicker()))
-                .map(Ticker::getDate)
-                .toList();
+            User user = userRepository.findUserByLogin(login)
+                    .orElseThrow(() -> new UserNotFoundException(login));
 
-        List<Ticker> tickers = tickerIntegrationResponseDTO.getResults()
-                .stream()
-                .filter(t -> !dates.contains(t.getT().toLocalDateTime().toLocalDate()))
-                .map(tickerDTO -> {
-                    Ticker tickerEntity = tickerMapper.toEntity(tickerDTO);
-                    tickerEntity.setUserId(user);
-                    tickerEntity.setTicker(tickerRequestDTO.getTicker());
 
-                    return tickerEntity;
-                })
-                .toList();
+            List<LocalDate> dates = user.getTickers().stream()
+                    .filter(d -> d.getTicker().equalsIgnoreCase(tickerIntegrationResponseDTO.getTicker()))
+                    .map(Ticker::getDate)
+                    .toList();
 
-        tickerRepository.saveAll(tickers);
+
+            List<Ticker> tickers = tickerIntegrationResponseDTO.getResults()
+                    .stream()
+                    .filter(t -> !dates.contains(t.getT().toLocalDateTime().toLocalDate()))
+                    .map(tickerDTO -> {
+                        Ticker tickerEntity = tickerMapper.toEntity(tickerDTO);
+                        tickerEntity.setUserId(user);
+                        tickerEntity.setTicker(tickerRequestDTO.getTicker());
+
+                        return tickerEntity;
+                    })
+                    .toList();
+
+            tickerRepository.saveAll(tickers);
+        }
     }
 
     @Override
     public TickerDTO getSavedTickers(String symbol) {
-        String login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findUserByLogin(login).orElseThrow(() -> new UserNotFoundException(login));
 
         List<Ticker> tickers = tickerRepository.findBySymbolAndUserId(symbol, user.getId());
