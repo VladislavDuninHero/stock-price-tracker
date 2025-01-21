@@ -3,6 +3,7 @@ package com.pet.stock_price_tracker.config.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
+import com.pet.stock_price_tracker.constants.Pages;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
 import com.pet.stock_price_tracker.enums.ErrorCode;
@@ -42,7 +43,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        if (
+                request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
+                || request.getServletPath().equalsIgnoreCase(Routes.REGISTRATION_ROUTE)
+                || request.getRequestURI().startsWith("/css/")
+                || request.getRequestURI().startsWith("/js/")
+                || request.getRequestURI().startsWith("/images/")
+        ) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authorizationHeader == null) {
+            response.sendRedirect(Pages.LOGIN_PAGE);
+            return;
+        }
 
         if (authorizationHeader != null && authorizationHeader.startsWith(OfficialProperties.BEARER_TOKEN_PREFIX)) {
             String token = authorizationHeader.substring(OfficialProperties.BEARER_TOKEN_PREFIX.length());

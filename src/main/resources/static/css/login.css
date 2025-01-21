@@ -9,6 +9,7 @@
     background-image: none; /*нужен фон*/
     background-size: cover;
     background-position: center;
+    font-family: sans-serif;
 }
 
 .main-login-page {
@@ -32,15 +33,18 @@
 .login-form__login-form-label {
     text-align: center;
     font-size: larger;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .main-login-page__login-form {
     display: flex;
     margin: 10px;
+    padding: 5px;
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    border: 1px solid black;
+    border-radius: 5px;
 }
 
 .input-field {
@@ -48,7 +52,7 @@
     margin: 5px;
     padding: 5px;
     min-height: 2.5rem;
-    border: 1px solid black;
+    border: 1px solid #bfbfbf;
 }
 .login-form__login-field {
 
@@ -60,10 +64,10 @@
 .footer-login-page__user-link {
     font-size: 0.8rem;
     text-decoration: none;
-    color: white;
+    color: black;
 }
 .footer-login-page__user-link:hover {
-    color: yellow;
+    color: gray;
 }
 
 .login-form__login-button {
@@ -71,9 +75,10 @@
     margin: 5px;
     padding: 5px;
     cursor: pointer;
-    min-height: 3rem;
-    background-color: #01dafc;
-    box-shadow: 0 4px 10px black;
+    min-height: 2.5rem;
+    width: 8.5rem;
+    color: white;
+    background-color: #004eff;
 }
 .login-form__login-button:active {
     transform: scale(0.9);
@@ -105,4 +110,14 @@
     width: 100%;
     align-items: center;
     padding: 5px;
+    margin-top: 15px;
+}
+
+.login-form__redirect-link:hover {
+    color: #008cff;
+    transition: ease-in-out 0.2s all;
+}
+.login-form__redirect-link:active {
+    transform: scale(0.9);
+    transition: ease-in-out 0.2s all;
 }

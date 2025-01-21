@@ -14,12 +14,14 @@
         <header class="header-login-page"></header>
         <main class="main-login-page">
             <form class="main-login-page__login-form" method="post">
-                <label class="login-form__login-form-label">Login</label>
-                <input class="input-field login-form__login-field" id="username" name="username" placeholder="login"/>
-                <input class="input-field login-form__password-field" id="password" name="password" placeholder="password"/>
+                <label class="login-form__login-form-label">
+                    Sign In to your Account
+                </label>
+                <input class="input-field login-form__login-field" placeholder="login"/>
+                <input class="input-field login-form__password-field" placeholder="password"/>
                 <article class="login-form__login-form-controllers">
                     <button class="login-form__login-button">Submit</button>
-                    <a href="registration">Sign up</a>
+                    <a class="login-form__redirect-link" href="registration">Sign up</a>
                 </article>
                 <div class="login-form__error-container" th:if="${param.error}">
                     Invalid login or password
@@ -31,5 +33,6 @@
             <a href="mailto:vladislavdunin.java@gmail.com" class="footer-login-page__user-link">vladislavdunin.java@gmail.com</a>
         </footer>
     </div>
+
 </body>
 </html>

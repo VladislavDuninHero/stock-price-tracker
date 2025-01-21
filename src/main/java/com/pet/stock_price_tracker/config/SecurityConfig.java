@@ -39,6 +39,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, Routes.API_USER_LOGIN_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.POST, Routes.API_USER_REGISTRATION_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.POST, Routes.API_USER_REFRESH_TOKEN_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.GET, Routes.LOGIN_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.GET, Routes.REGISTRATION_ROUTE).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
