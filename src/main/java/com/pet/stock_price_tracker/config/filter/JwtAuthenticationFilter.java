@@ -56,11 +56,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (authorizationHeader == null) {
-            response.sendRedirect(Pages.LOGIN_PAGE);
-            return;
-        }
-
         if (authorizationHeader != null && authorizationHeader.startsWith(OfficialProperties.BEARER_TOKEN_PREFIX)) {
             String token = authorizationHeader.substring(OfficialProperties.BEARER_TOKEN_PREFIX.length());
 
@@ -87,20 +82,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 return;
             }
-        } else if (
-                !request.getServletPath().equalsIgnoreCase(Routes.API_USER_LOGIN_ROUTE)
-                && !request.getServletPath().equalsIgnoreCase(Routes.API_USER_REGISTRATION_ROUTE)
-                && !request.getServletPath().isEmpty()
-        ) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            UserErrorDTO userErrorDTO = new UserErrorDTO(
-                    ErrorCode.AUTHORIZATION_HEADER_IS_MISSING.name(),
-                    ExceptionMessage.AUTHORIZATION_HEADER_IS_MISSING_EXCEPTION
-            );
-            response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
-
-            return;
         }
 
         filterChain.doFilter(request, response);

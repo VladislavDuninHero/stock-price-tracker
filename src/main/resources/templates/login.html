@@ -9,30 +9,30 @@
     <link type="text/css" rel="stylesheet" th:href="@{/css/normalize.css}">
     <title>Stock price tracker</title>
 </head>
-<body>
-    <div class="main-container">
-        <header class="header-login-page"></header>
-        <main class="main-login-page">
-            <form class="main-login-page__login-form" method="post">
-                <label class="login-form__login-form-label">
-                    Sign In to your Account
-                </label>
-                <input class="input-field login-form__login-field" placeholder="login"/>
-                <input class="input-field login-form__password-field" placeholder="password"/>
-                <article class="login-form__login-form-controllers">
-                    <button class="login-form__login-button">Submit</button>
-                    <a class="login-form__redirect-link" href="registration">Sign up</a>
-                </article>
-                <div class="login-form__error-container" th:if="${param.error}">
-                    Invalid login or password
-                </div>
-            </form>
-        </main>
-        <footer class="footer-login-page">
-            <a href="https://t.me/VladislavDunin" class="footer-login-page__user-link">@VladislavDunin</a>
-            <a href="mailto:vladislavdunin.java@gmail.com" class="footer-login-page__user-link">vladislavdunin.java@gmail.com</a>
-        </footer>
-    </div>
+    <body>
+        <div class="main-container">
+            <header class="header-login-page"></header>
+            <main class="main-login-page">
+                <form class="main-login-page__login-form" method="post" action=api/v1/user/login>
+                    <label class="login-form__login-form-label">
+                        Sign In to your Account
+                    </label>
+                    <input class="input-field login-form__login-field" placeholder="login"/>
+                    <input class="input-field login-form__password-field" placeholder="password"/>
+                    <article class="login-form__login-form-controllers">
+                        <button class="login-form__login-button">Submit</button>
+                        <a class="login-form__redirect-link" href="registration">Sign up</a>
+                    </article>
+                    <div class="login-form__error-container login-form__error-container_hidden">
 
-</body>
+                    </div>
+                </form>
+            </main>
+            <footer class="footer-login-page">
+                <a href="https://t.me/VladislavDunin" class="footer-login-page__user-link">@VladislavDunin</a>
+                <a href="mailto:vladislavdunin.java@gmail.com" class="footer-login-page__user-link">vladislavdunin.java@gmail.com</a>
+            </footer>
+        </div>
+        <script type="module" th:src="@{/js/LoginForm.js}"></script>
+    </body>
 </html>

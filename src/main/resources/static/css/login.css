@@ -28,6 +28,11 @@
     color: red;
     text-align: center;
     margin: 5px;
+    visibility: visible;
+}
+
+.login-form__error-container_hidden {
+    visibility: hidden;
 }
 
 .login-form__login-form-label {
@@ -69,6 +74,7 @@
 .footer-login-page__user-link:hover {
     color: gray;
 }
+
 
 .login-form__login-button {
     border-radius: 5px;

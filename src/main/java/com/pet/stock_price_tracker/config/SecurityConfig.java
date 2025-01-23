@@ -1,7 +1,6 @@
 package com.pet.stock_price_tracker.config;
 
 import com.pet.stock_price_tracker.config.filter.JwtAuthenticationFilter;
-import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.Routes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,9 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfig(
+            JwtAuthenticationFilter jwtAuthenticationFilter
+    ) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
