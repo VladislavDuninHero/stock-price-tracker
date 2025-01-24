@@ -63,8 +63,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseLoginDTO login(UserLoginDTO userLoginDTO) {
         userLoginValidationManager.validate(userLoginDTO);
 
-        User foundUser = userRepository.findUserByLogin(userLoginDTO.getLogin())
-                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND_EXCEPTION));
+        User foundUser = findUserEntityByLogin(userLoginDTO.getLogin());
 
         JwtDTO authentication = new JwtDTO(
                 jwtService.generateAccessToken(foundUser.getLogin()),
@@ -93,5 +92,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponseDTO> getAllUsers() {
         return userRepository.getAllUsers().stream().map(userMapper::toDTO).toList();
+    }
+
+    @Override
+    public User findUserEntityByLogin(String login) {
+        Optional<User> foundUser = userRepository.findUserByLogin(login);
+
+        return foundUser.orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND_EXCEPTION));
     }
 }

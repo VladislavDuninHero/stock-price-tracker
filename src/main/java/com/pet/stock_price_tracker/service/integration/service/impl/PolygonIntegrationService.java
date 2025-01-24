@@ -10,6 +10,7 @@ import com.pet.stock_price_tracker.properties.PolygonIntegrationProperties;
 import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -17,6 +18,8 @@ public class PolygonIntegrationService implements PolygonService {
 
     private final Polygon polygon;
     private final PolygonIntegrationProperties polygonIntegrationProperties;
+
+    private static final int MIN_DAY_COUNT = 0;
 
     public PolygonIntegrationService(Polygon polygon, PolygonIntegrationProperties polygonIntegrationProperties) {
         this.polygon = polygon;
@@ -28,10 +31,7 @@ public class PolygonIntegrationService implements PolygonService {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        int multiplier =
-                tickerRequestDTO.getEnd().getDayOfMonth() - tickerRequestDTO.getStart().getDayOfMonth() <= 0
-                        ? 1
-                        : tickerRequestDTO.getEnd().getDayOfMonth() - tickerRequestDTO.getStart().getDayOfMonth();
+        int multiplier = dateCalculator(tickerRequestDTO.getStart(), tickerRequestDTO.getEnd());
         String ticker = tickerRequestDTO.getTicker();
         String timespan = TimespanType.DAY.name().toLowerCase();
         String from = tickerRequestDTO.getStart().format(dateFormatter);
@@ -41,18 +41,15 @@ public class PolygonIntegrationService implements PolygonService {
         String apiKey = polygonIntegrationProperties.getApiKey();
 
         try {
-            return polygon.save(
-                    ticker,
-                    multiplier,
-                    timespan,
-                    from,
-                    to,
-                    adjusted,
-                    sort,
-                    apiKey
-            );
+            return polygon.save(ticker, multiplier, timespan, from, to, adjusted, sort, apiKey);
         } catch (Exception e) {
             throw new IntegrationException(e.getMessage());
         }
+    }
+
+    private int dateCalculator(LocalDate start, LocalDate end) {
+        return end.getDayOfMonth() - start.getDayOfMonth() <= MIN_DAY_COUNT
+                ? 1
+                : end.getDayOfMonth() - start.getDayOfMonth();
     }
 }

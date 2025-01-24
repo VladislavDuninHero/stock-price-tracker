@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface TickerRepository extends JpaRepository<Ticker, Long> {
 
-    @Query("FROM Ticker t WHERE t.userId.id = :userId AND t.ticker = :symbol")
+    @Query("FROM Ticker t WHERE t.user.id = :userId AND t.ticker = :symbol")
     List<Ticker> findBySymbolAndUserId(String symbol, long userId);
 }

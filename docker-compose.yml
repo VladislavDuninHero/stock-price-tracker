@@ -15,7 +15,6 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/stock_price_tracker_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=386629
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   postgres:
     image: postgres

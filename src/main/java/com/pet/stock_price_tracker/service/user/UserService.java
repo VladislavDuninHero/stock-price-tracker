@@ -5,6 +5,7 @@ import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
+import com.pet.stock_price_tracker.entity.User;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface UserService {
     UserResponseDTO findUserByLogin(String login);
     JwtDTO refreshToken(String refreshToken);
     List<UserResponseDTO> getAllUsers();
+    User findUserEntityByLogin(String login);
 }

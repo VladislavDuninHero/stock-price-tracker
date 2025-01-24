@@ -24,7 +24,7 @@ public class Ticker {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @Column(name = "open")
     private BigDecimal open;
@@ -50,7 +50,7 @@ public class Ticker {
         if (o == null || getClass() != o.getClass()) return false;
         Ticker ticker1 = (Ticker) o;
         return Objects.equals(id, ticker1.id)
-                && Objects.equals(userId, ticker1.userId)
+                && Objects.equals(user, ticker1.user)
                 && Objects.equals(open, ticker1.open)
                 && Objects.equals(close, ticker1.close)
                 && Objects.equals(highest, ticker1.highest)
@@ -61,6 +61,6 @@ public class Ticker {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, open, close, highest, lowest, ticker, date);
+        return Objects.hash(id, user, open, close, highest, lowest, ticker, date);
     }
 }

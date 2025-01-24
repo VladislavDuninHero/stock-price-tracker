@@ -9,4 +9,5 @@ public final class ExceptionMessage {
     public static final String TICKER_NOT_FOUND_EXCEPTION = "Ticker not found";
     public static final String END_BEFORE_START_DATE_EXCEPTION = "The end date cannot be before the start date.";
     public static final String AUTHORIZATION_HEADER_IS_MISSING_EXCEPTION = "Authorization header is missing";
+    public static final String SYMBOL_PARAM_IS_NOT_BE_EMPTY = "symbol param is not be empty";
 }

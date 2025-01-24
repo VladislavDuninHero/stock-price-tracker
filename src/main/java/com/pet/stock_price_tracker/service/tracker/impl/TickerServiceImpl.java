@@ -3,6 +3,7 @@ package com.pet.stock_price_tracker.service.tracker.impl;
 import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDataDTO;
+import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDataIntegrationResponseDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerIntegrationResponseDTO;
 import com.pet.stock_price_tracker.entity.Ticker;
 import com.pet.stock_price_tracker.entity.User;
@@ -12,6 +13,7 @@ import com.pet.stock_price_tracker.repository.UserRepository;
 import com.pet.stock_price_tracker.security.SecurityUser;
 import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
+import com.pet.stock_price_tracker.service.user.UserService;
 import com.pet.stock_price_tracker.service.utils.mapping.TickerMapper;
 import com.pet.stock_price_tracker.service.validation.manager.impl.TickerRequestValidationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,14 +26,14 @@ import java.util.List;
 public class TickerServiceImpl implements TickerService {
 
     private final TickerRepository tickerRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final TickerMapper tickerMapper;
     private final PolygonService polygonService;
     private final TickerRequestValidationManager tickerRequestValidationManager;
 
     public TickerServiceImpl(
             TickerRepository tickerRepository,
-            UserRepository userRepository,
+            UserService userService,
             PolygonService polygonService,
             TickerMapper tickerMapper,
             TickerRequestValidationManager tickerRequestValidationManager
@@ -39,7 +41,7 @@ public class TickerServiceImpl implements TickerService {
         this.tickerRepository = tickerRepository;
         this.polygonService = polygonService;
         this.tickerMapper = tickerMapper;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.tickerRequestValidationManager = tickerRequestValidationManager;
     }
 
@@ -52,9 +54,9 @@ public class TickerServiceImpl implements TickerService {
         if (tickerIntegrationResponseDTO.getResults() != null) {
             String login = SecurityContextHolder.getContext().getAuthentication().getName();
 
-            User user = userRepository.findUserByLogin(login)
-                    .orElseThrow(() -> new UserNotFoundException(login));
+            User user = userService.findUserEntityByLogin(login);
 
+            List<TickerDataIntegrationResponseDTO> tickerData = tickerIntegrationResponseDTO.getResults();
 
             List<LocalDate> dates = user.getTickers().stream()
                     .filter(d -> d.getTicker().equalsIgnoreCase(tickerIntegrationResponseDTO.getTicker()))
@@ -62,16 +64,10 @@ public class TickerServiceImpl implements TickerService {
                     .toList();
 
 
-            List<Ticker> tickers = tickerIntegrationResponseDTO.getResults()
+            List<Ticker> tickers = tickerData
                     .stream()
                     .filter(t -> !dates.contains(t.getT().toLocalDateTime().toLocalDate()))
-                    .map(tickerDTO -> {
-                        Ticker tickerEntity = tickerMapper.toEntity(tickerDTO);
-                        tickerEntity.setUserId(user);
-                        tickerEntity.setTicker(tickerRequestDTO.getTicker());
-
-                        return tickerEntity;
-                    })
+                    .map(ticker -> configurerTickerEntity(ticker, user, tickerRequestDTO))
                     .toList();
 
             tickerRepository.saveAll(tickers);
@@ -81,12 +77,20 @@ public class TickerServiceImpl implements TickerService {
     @Override
     public TickerDTO getSavedTickers(String symbol) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findUserByLogin(login).orElseThrow(() -> new UserNotFoundException(login));
+        User user = userService.findUserEntityByLogin(login);
 
         List<Ticker> tickers = tickerRepository.findBySymbolAndUserId(symbol, user.getId());
 
         List<TickerDataDTO> tickersData = tickers.stream().map(tickerMapper::toTickerDataDTO).toList();
 
         return new TickerDTO(symbol, tickersData);
+    }
+
+    private Ticker configurerTickerEntity(TickerDataIntegrationResponseDTO ticker, User user, TickerRequestDTO tickerRequestDTO) {
+        Ticker tickerEntity = tickerMapper.toEntity(ticker);
+        tickerEntity.setUser(user);
+        tickerEntity.setTicker(tickerRequestDTO.getTicker());
+
+        return tickerEntity;
     }
 }

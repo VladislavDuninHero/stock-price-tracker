@@ -2,10 +2,13 @@ package com.pet.stock_price_tracker.controller.tracker;
 
 import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDTO;
+import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +31,11 @@ public class StockTrackerController {
     }
 
     @GetMapping(Routes.STOCK_TICKER_GET_SAVED_ROUTE)
-    public ResponseEntity<TickerDTO> getSaved(@RequestParam String symbol) {
+    public ResponseEntity<TickerDTO> getSaved(
+            @RequestParam
+            @NotEmpty(message = ExceptionMessage.SYMBOL_PARAM_IS_NOT_BE_EMPTY)
+            String symbol
+    ) {
         TickerDTO tickerDTO = tickerService.getSavedTickers(symbol);
 
         return ResponseEntity.ok(tickerDTO);
