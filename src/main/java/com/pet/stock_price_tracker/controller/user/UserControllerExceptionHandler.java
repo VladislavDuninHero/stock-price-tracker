@@ -4,9 +4,7 @@ import com.pet.stock_price_tracker.dto.error.FieldErrorDTO;
 import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
 import com.pet.stock_price_tracker.dto.error.ValidationErrorDTO;
 import com.pet.stock_price_tracker.enums.ErrorCode;
-import com.pet.stock_price_tracker.exception.UserIsAlreadyRegisteredException;
-import com.pet.stock_price_tracker.exception.UserNotFoundException;
-import com.pet.stock_price_tracker.exception.UserPasswordIsInvalid;
+import com.pet.stock_price_tracker.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +60,24 @@ public class UserControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ValidationErrorDTO<UserErrorDTO> onUserPasswordIsInvalid(UserPasswordIsInvalid ex) {
         UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_CREDENTIALS.name(), ex.getLocalizedMessage());
+
+        return new ValidationErrorDTO<>(List.of(userErrorDTO));
+    }
+
+    @ExceptionHandler(SpaceSymbolException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationErrorDTO<UserErrorDTO> onUserPasswordIsInvalid(SpaceSymbolException ex) {
+        UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_CHARACTERS.name(), ex.getLocalizedMessage());
+
+        return new ValidationErrorDTO<>(List.of(userErrorDTO));
+    }
+
+    @ExceptionHandler(InvalidCharactersException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationErrorDTO<UserErrorDTO> onUserPasswordIsInvalid(InvalidCharactersException ex) {
+        UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_CHARACTERS.name(), ex.getLocalizedMessage());
 
         return new ValidationErrorDTO<>(List.of(userErrorDTO));
     }

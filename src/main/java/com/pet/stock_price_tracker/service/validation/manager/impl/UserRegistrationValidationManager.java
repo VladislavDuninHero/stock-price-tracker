@@ -16,7 +16,7 @@ public class UserRegistrationValidationManager implements ValidationManager<User
 
     @Override
     public void validate(UserDTO value) {
-        validationConfig.configurateUserValidators().forEach(validator -> validator.validate(value));
+        validationConfig.configureUserValidators().forEach(validator -> validator.validate(value));
     }
 
 }

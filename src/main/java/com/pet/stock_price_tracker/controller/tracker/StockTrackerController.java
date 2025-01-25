@@ -8,7 +8,6 @@ import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
 import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

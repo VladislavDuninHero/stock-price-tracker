@@ -16,7 +16,7 @@ public class UserLoginValidationManager implements ValidationManager<UserLoginDT
 
     @Override
     public void validate(UserLoginDTO value) {
-        validationConfig.configurateUserLoginValidators().forEach(validator -> validator.validate(value));
+        validationConfig.configureUserLoginValidators().forEach(validator -> validator.validate(value));
     }
 
 

@@ -1,76 +1,61 @@
+import {Constant} from "./Constant.js";
 import {ExceptionHandler} from "./ExceptionHandler.js";
+import {FieldFactory} from "./FieldFactory.js";
+import {FieldNameEnum} from "./FildNameEnum.js";
 
-document.addEventListener("DOMContentLoaded", (e) => {
+document.querySelector(".main-registration-page__registration-form")
+    .addEventListener("submit", (e) => {
+        e.preventDefault();
 
-    const exceptionContainer = document.querySelector(".registration-form__error-container");
-    const exceptionHandler = new ExceptionHandler(exceptionContainer);
-    const handler = new RegistrationForm(exceptionHandler);
-
-    document.querySelector(".main-registration-page__registration-form")
-        .addEventListener("submit", e => {
-            e.preventDefault();
-
-            const response = handler.submitFormInitiate();
-            if (response.betError) {
-                return;
-            }
-
-            exceptionContainer.textContent = "";
-
-        });
-});
-
-class RegistrationForm {
-
-    url = "/api/v1/user";
-    betError = false;
-
-    constructor(exceptionHandler) {
-        this.exceptionHandler = exceptionHandler;
-    }
-
-    async submitFormInitiate() {
         const login = document.querySelector(".registration-form__login-field");
         const password = document.querySelector(".registration-form__password-field");
-        const form = document.querySelector(".main-registration-page__registration-form");
+        const exceptionHandler = new ExceptionHandler();
+        const fieldFactory = new FieldFactory();
 
-        form.addEventListener("submit", (e) => e.preventDefault());
-
-        const userDTO = {
-            login: login.value,
-            password: password.value
+        const userDate = {
+            "login": login.value,
+            "password": password.value
         };
 
-        return this.submitForm(userDTO);
-    }
-
-    async submitForm(data) {
-        const response = await fetch(this.url, {
+        fetch(Constant.REGISTRATION_URL, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify(data)
-        });
-
-        try {
-            if (!response.ok) {
+            body: JSON.stringify(userDate)
+        })
+            .then(async response => {
                 const json = await response.json();
-                const errors = json.errors.map((el) => {
+                if (response.ok) {
+                    return json;
+                }
+
+                const errors = json.errors.map(el => {
                     return {
-                        field: el.field,
-                        code: el.errorCode,
-                        message: el.errorMessage
+                        errorCode: el.errorCode,
+                        errorMessage: el.errorMessage
                     }
-                });
-                this.betError = true;
+                })
+
+                console.log(errors)
 
                 throw new AggregateError(errors);
-            }
-        } catch (error) {
-            error.errors.forEach(error => {
-                this.exceptionHandler.handle(error.field, error.code, error.message);
             })
-        }
-    }
-}
+            .then(data => {
+                localStorage.setItem("token", data.authentication.accessToken);
+
+                return fetch(Constant.LOGIN_URL, {
+                    headers: {
+                        "Authorization": "Bearer " + data.authentication.accessToken
+                    }
+                });
+            })
+            .catch(async error => error.errors
+                .forEach(e => exceptionHandler.handle(
+                        fieldFactory.getField(FieldNameEnum.REGISTRATION_FORM_ERROR_CONTAINER),
+                        e.errorCode,
+                        e.errorMessage
+                    )
+                )
+            );
+    });

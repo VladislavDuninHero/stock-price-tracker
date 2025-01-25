@@ -16,7 +16,7 @@ public class TickerRequestValidationManager implements ValidationManager<TickerR
 
     @Override
     public void validate(TickerRequestDTO value) {
-        validationConfig.configurateTickerRequestValidators().forEach(validator -> validator.validate(value));
+        validationConfig.configureTickerRequestValidators().forEach(validator -> validator.validate(value));
     }
 
 }

@@ -2,6 +2,7 @@ package com.pet.stock_price_tracker.controller;
 
 import com.pet.stock_price_tracker.constants.Pages;
 import com.pet.stock_price_tracker.constants.Routes;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -18,9 +19,8 @@ public class MainController {
         return Pages.REGISTRATION_PAGE;
     }
 
-    @GetMapping(Routes.HOME_ROUTE)
+    @GetMapping(value = {Routes.HOME_ROUTE, Pages.HOME_PAGE})
     public String home() {
-
         return Pages.HOME_PAGE;
     }
 }

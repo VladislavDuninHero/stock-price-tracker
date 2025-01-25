@@ -28,13 +28,21 @@ document.querySelector(".main-login-page__login-form")
                 throw new Error("login failed");
             })
             .then(data => {
-                localStorage.setItem("token", data.authentication.accessToken);
+                const now = new Date();
+                const daysToAdd = 7;
+                now.setTime(now.getTime() + (daysToAdd * 24 * 60 * 60 * 1000));
 
-                return fetch(Constant.HOME_URL, {
+                const expires = now.toUTCString();
+                console.log("cookie")
+                document.cookie = `token=${data.authentication.accessToken}; expires=${expires}; path=/;`;
+
+                fetch(Constant.HOME_URL, {
                     headers: {
                         "Authorization": "Bearer " + data.authentication.accessToken
                     }
                 });
+
+                window.location.href = Constant.HOME_URL;
             })
             .catch(error => console.log(error));
     });
