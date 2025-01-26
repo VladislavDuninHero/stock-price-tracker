@@ -1,6 +1,8 @@
 package com.pet.stock_price_tracker.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pet.stock_price_tracker.config.Config;
+import com.pet.stock_price_tracker.config.SecurityConfig;
 import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
 import com.pet.stock_price_tracker.constants.Routes;
@@ -33,10 +35,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
+    private final Config config;
 
-    public JwtAuthenticationFilter(JwtService jwtService, ObjectMapper objectMapper) {
+    public JwtAuthenticationFilter(JwtService jwtService, ObjectMapper objectMapper, Config config) {
         this.jwtService = jwtService;
         this.objectMapper = objectMapper;
+        this.config = config;
     }
 
     @Override
@@ -48,6 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (
                 request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
                         || request.getServletPath().equalsIgnoreCase(Routes.REGISTRATION_ROUTE)
+                        || request.getServletPath().equalsIgnoreCase(Routes.API_USER_LOGOUT_ROUTE)
                         || request.getRequestURI().startsWith("/css/")
                         || request.getRequestURI().startsWith("/js/")
                         || request.getRequestURI().startsWith("/images/")
@@ -57,6 +62,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (
+                authorizationHeader == null
+                        && request.getCookies() == null
+                        && !config.acceptedRoutesConfigurer().contains(request.getServletPath())
+        ) {
+            response.sendRedirect(Routes.LOGIN_ROUTE);
+            return;
+        }
 
         if (authorizationHeader != null && authorizationHeader.startsWith(OfficialProperties.BEARER_TOKEN_PREFIX)) {
             String token = authorizationHeader.substring(OfficialProperties.BEARER_TOKEN_PREFIX.length());
@@ -86,43 +100,56 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        if (request.getCookies() != null) {
+        if (authorizationHeader == null && request.getCookies() != null) {
             List<Cookie> cookies = List.of(request.getCookies());
 
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equalsIgnoreCase(OfficialProperties.TOKEN_COOKIE)) {
-
-                    try {
-
-                        Claims validated = jwtService.validateToken(cookie.getValue());
-                        String login = validated.getSubject();
-
-                        if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                    login, null, Collections.emptyList()
-                            );
-
-                            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                            SecurityContextHolder.getContext().setAuthentication(authentication);
-                        }
-
-                    } catch (ExpiredJwtException e) {
-                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-                        UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
-                        response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
-
-                        return;
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-            }
+            validateCookie(cookies, request, response);
         }
 
 
         filterChain.doFilter(request, response);
+    }
+
+
+    private void validateCookie(
+            List<Cookie> cookies,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equalsIgnoreCase(Cookies.TOKEN)) {
+
+                try {
+
+                    Claims validated = jwtService.validateToken(cookie.getValue());
+                    String login = validated.getSubject();
+
+                    if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                login, null, Collections.emptyList()
+                        );
+
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+
+                } catch (ExpiredJwtException e) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                    UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
+                    response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+                    return;
+                } catch (Exception e) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                    UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_TOKEN.name(), e.getMessage());
+                    response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+                    return;
+                }
+            }
+        }
     }
 
 }

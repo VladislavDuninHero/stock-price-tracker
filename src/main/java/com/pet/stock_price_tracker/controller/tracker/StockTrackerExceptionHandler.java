@@ -10,6 +10,7 @@ import com.pet.stock_price_tracker.exception.IntegrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.method.ParameterValidationResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -65,6 +66,15 @@ public class StockTrackerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ValidationErrorDTO<TrackerErrorDTO> onDateValidationException(DateValidationException ex) {
         TrackerErrorDTO trackerErrorDTO = new TrackerErrorDTO(ErrorCode.VALIDATION_ERROR.name(), ex.getMessage());
+
+        return new ValidationErrorDTO<>(List.of(trackerErrorDTO));
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationErrorDTO<TrackerErrorDTO> onMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+        TrackerErrorDTO trackerErrorDTO = new TrackerErrorDTO(ErrorCode.INVALID_PARAMETERS_ERROR.name(), ex.getMessage());
 
         return new ValidationErrorDTO<>(List.of(trackerErrorDTO));
     }

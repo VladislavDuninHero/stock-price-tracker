@@ -1,0 +1,16 @@
+.footer__user-link {
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: black;
+}
+.footer__user-link:hover {
+    color: gray;
+}
+
+.footer-with-user-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

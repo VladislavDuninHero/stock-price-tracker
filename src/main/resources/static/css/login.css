@@ -25,14 +25,14 @@
 }
 
 .login-form__error-container {
-    color: red;
     text-align: center;
-    margin: 5px;
-    visibility: visible;
-}
-
-.login-form__error-container_hidden {
-    visibility: hidden;
+    min-width: 15rem;
+    min-height: 2rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }
 
 .login-form__login-form-label {
@@ -48,12 +48,14 @@
     padding: 5px;
     justify-content: center;
     flex-direction: column;
-    width: 100%;
+    min-width: 15rem;
+    max-width: 20rem;
     border-radius: 5px;
 }
 
 .input-field {
     border-radius: 10px;
+    width: 100%;
     margin: 5px;
     padding: 5px;
     min-height: 2.5rem;
@@ -65,16 +67,6 @@
 .password-form__login-field {
 
 }
-
-.footer-login-page__user-link {
-    font-size: 0.8rem;
-    text-decoration: none;
-    color: black;
-}
-.footer-login-page__user-link:hover {
-    color: gray;
-}
-
 
 .login-form__login-button {
     border-radius: 5px;
@@ -95,14 +87,6 @@
 }
 
 .header-login-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.footer-login-page {
     display: flex;
     flex-direction: column;
     justify-content: center;

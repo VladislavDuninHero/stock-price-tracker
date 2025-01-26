@@ -4,8 +4,9 @@
     padding: 5px;
     cursor: pointer;
     min-height: 2.5rem;
-    background-color: #00f6ff;
-    box-shadow: 0 4px 10px black;
+    width: 8.5rem;
+    color: white;
+    background-color: #004eff;
 }
 
 .logout-button:active {

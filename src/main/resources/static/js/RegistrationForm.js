@@ -1,7 +1,5 @@
 import {Constant} from "./Constant.js";
 import {ExceptionHandler} from "./ExceptionHandler.js";
-import {FieldFactory} from "./FieldFactory.js";
-import {FieldNameEnum} from "./FildNameEnum.js";
 
 document.querySelector(".main-registration-page__registration-form")
     .addEventListener("submit", (e) => {
@@ -9,10 +7,10 @@ document.querySelector(".main-registration-page__registration-form")
 
         const login = document.querySelector(".registration-form__login-field");
         const password = document.querySelector(".registration-form__password-field");
-        const exceptionHandler = new ExceptionHandler();
-        const fieldFactory = new FieldFactory();
+        const field = document.querySelector(Constant.REGISTRATION_FORM_ERROR_CONTAINER);
+        const exceptionHandler = new ExceptionHandler(field);
 
-        const userDate = {
+        const userData = {
             "login": login.value,
             "password": password.value
         };
@@ -22,11 +20,16 @@ document.querySelector(".main-registration-page__registration-form")
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify(userDate)
+            body: JSON.stringify(userData)
         })
             .then(async response => {
                 const json = await response.json();
+
                 if (response.ok) {
+                    field.style.color = "green";
+                    field.style.border = "1px solid #01810133";
+                    field.style.backgroundColor = "#03ff0361";
+                    field.textContent = Constant.SUCCESS_MESSAGE;
                     return json;
                 }
 
@@ -37,22 +40,10 @@ document.querySelector(".main-registration-page__registration-form")
                     }
                 })
 
-                console.log(errors)
-
                 throw new AggregateError(errors);
             })
-            .then(data => {
-                localStorage.setItem("token", data.authentication.accessToken);
-
-                return fetch(Constant.LOGIN_URL, {
-                    headers: {
-                        "Authorization": "Bearer " + data.authentication.accessToken
-                    }
-                });
-            })
-            .catch(async error => error.errors
+            .catch(error => error.errors
                 .forEach(e => exceptionHandler.handle(
-                        fieldFactory.getField(FieldNameEnum.REGISTRATION_FORM_ERROR_CONTAINER),
                         e.errorCode,
                         e.errorMessage
                     )

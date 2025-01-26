@@ -5,19 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link type="text/css" rel="stylesheet" th:href="@{/css/login.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/index.css}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/logoutButton.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/footerWithUserLinks.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/normalize.css}">
     <title>Stock price tracker</title>
 </head>
 <body>
 <div class="main-container">
-    <header class="header-home-page">
-        <article th:insert="~{LogoutButton :: logout-form}"></article>
+    <header class="header-home-page" th:insert="~{LogoutButton :: logout-form}">
     </header>
     <main class="main-home-page">
         home
     </main>
-    <footer class="footer-home-page"></footer>
+    <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
 </div>
 </body>
 </html>

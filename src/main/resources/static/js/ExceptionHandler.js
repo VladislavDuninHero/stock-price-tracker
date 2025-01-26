@@ -6,11 +6,15 @@ export class ExceptionHandler {
 
     errors = new Map([
         ["VALIDATION_ERROR", "Invalid value"],
-        ["USER_IS_ALREADY_EXISTS", "User is already registered"]
+        ["USER_IS_ALREADY_EXISTS", "User is already registered"],
+        ["INVALID_CHARACTERS", "Login or password contains invalid characters"],
+        ["USER_NOT_FOUND", "User not found"]
     ]);
 
-    handle(field, errorCode, error) {
+    handle(errorCode, error) {
         this.field.style.color = "red";
-        this.field.textContent = this.errors.get(errorCode) + ": " + field + " " + error;
+        this.field.style.border = "1px solid rgb(129 1 1 / 20%)";
+        this.field.style.backgroundColor = "rgb(255 76 76 / 38%)";
+        this.field.textContent = this.errors.get(errorCode) + ": " + error;
     }
 }

@@ -1,6 +1,7 @@
 package com.pet.stock_price_tracker.config;
 
 import com.pet.stock_price_tracker.config.filter.JwtAuthenticationFilter;
+import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.Routes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -40,12 +43,19 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, Routes.API_USER_LOGIN_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.POST, Routes.API_USER_REGISTRATION_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.POST, Routes.API_USER_REFRESH_TOKEN_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.POST, Routes.API_USER_LOGOUT_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.GET, Routes.LOGIN_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.POST, Routes.LOGOUT_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.GET, Routes.REGISTRATION_ROUTE).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> logout
+                        .logoutUrl(Routes.LOGOUT_ROUTE)
+                        .logoutSuccessUrl(Routes.LOGIN_ROUTE)
+                        .deleteCookies(Cookies.TOKEN)
+                )
                 .build();
     }
 
@@ -53,5 +63,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

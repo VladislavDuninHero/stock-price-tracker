@@ -6,8 +6,11 @@ import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
+import com.pet.stock_price_tracker.enums.TickerSymbol;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
+import com.pet.stock_price_tracker.service.validation.annotation.EnumValidate;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +36,8 @@ public class StockTrackerController {
     public ResponseEntity<TickerDTO> getSaved(
             @RequestParam
             @NotEmpty(message = ExceptionMessage.SYMBOL_PARAM_IS_NOT_BE_EMPTY)
+            @NonNull
+            @EnumValidate(enumClass = TickerSymbol.class, message = ExceptionMessage.TICKER_NOT_FOUND_EXCEPTION)
             String symbol
     ) {
         TickerDTO tickerDTO = tickerService.getSavedTickers(symbol);

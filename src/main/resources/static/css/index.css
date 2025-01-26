@@ -1,0 +1,21 @@
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    padding: 5px;
+    height: 100vh;
+    background-image: none; /*нужен фон*/
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+
+.header-home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+}
