@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.Length;
 public class UserLoginDTO {
 
     @NotNull(message = ExceptionMessage.LOGIN_IS_REQUIRED)
-    @NotEmpty(message = ExceptionMessage.LOGIN_IS_REQUIRED)
+    @NotEmpty(message = ExceptionMessage.LOGIN_IS_NOT_BE_EMPTY)
     @Length(min = 1, max = 64, message = ExceptionMessage.LOGIN_LENGTH_IS_INVALID)
     private String login;
 

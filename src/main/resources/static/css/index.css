@@ -18,4 +18,64 @@
     justify-content: center;
     align-items: flex-end;
     width: 100%;
+    border: 1px solid black;
+}
+
+.main-home-page {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.section__article-save-ticker-container {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__section-content-ticker-container {
+    border: 1px solid;
+    min-width: 50rem;
+    min-height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.article-save-ticker__input-save-field {
+    max-width: 15rem;
+}
+
+.input-field {
+    border-radius: 10px;
+    margin: 5px;
+    width: 100%;
+    padding: 5px;
+    min-height: 2.5rem;
+    border: 1px solid #bfbfbf;
+}
+
+.article-save-ticker__button-save {
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+    min-height: 2.5rem;
+    width: 8.5rem;
+    color: white;
+    background-color: #004eff;
+}
+
+.article-save-ticker__button-save:active {
+    transform: scale(0.9);
+}
+.article-save-ticker__button-save:hover {
+    background-color: #54a1e1;
+    transition: ease-in-out 0.2s all;
 }

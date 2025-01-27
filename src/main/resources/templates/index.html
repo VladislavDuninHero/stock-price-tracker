@@ -12,13 +12,31 @@
     <title>Stock price tracker</title>
 </head>
 <body>
-<div class="main-container">
-    <header class="header-home-page" th:insert="~{LogoutButton :: logout-form}">
-    </header>
-    <main class="main-home-page">
-        home
-    </main>
-    <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
-</div>
+    <div class="main-container">
+        <header class="header-home-page" th:insert="~{LogoutButton :: logout-form}">
+        </header>
+        <main class="main-home-page">
+            <section class="main__section-save-tickers-container">
+                <article class="section__article-save-ticker-container">
+                    <input class="input-field article-save-ticker__input-save-field">
+                    <button class="article-save-ticker__button-save">Save</button>
+                </article>
+                <article class="main__section-content-ticker-container">
+                    content
+                </article>
+            </section>
+            <section>
+                <article>
+                    search
+                </article>
+                <article>
+                    content
+                </article>
+            </section>
+        </main>
+        <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
+    </div>
+
+    <script type="module" th:src="@{/js/home/HomeListener.js}"></script>
 </body>
 </html>

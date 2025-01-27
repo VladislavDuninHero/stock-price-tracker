@@ -2,7 +2,6 @@ package com.pet.stock_price_tracker.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pet.stock_price_tracker.config.Config;
-import com.pet.stock_price_tracker.config.SecurityConfig;
 import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
 import com.pet.stock_price_tracker.constants.Routes;
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

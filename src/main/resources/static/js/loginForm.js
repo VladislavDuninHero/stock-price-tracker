@@ -11,6 +11,8 @@ document.querySelector(".main-login-page__login-form")
         const field = document.querySelector(Constant.LOGIN_FORM_ERROR_CONTAINER);
         const exceptionHandler = new ExceptionHandler(field);
 
+        field.textContent = "";
+
         const userData = {
             "login": login.value,
             "password": password.value

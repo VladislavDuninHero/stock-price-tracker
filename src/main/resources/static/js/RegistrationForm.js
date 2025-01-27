@@ -10,6 +10,8 @@ document.querySelector(".main-registration-page__registration-form")
         const field = document.querySelector(Constant.REGISTRATION_FORM_ERROR_CONTAINER);
         const exceptionHandler = new ExceptionHandler(field);
 
+        field.textContent = "";
+
         const userData = {
             "login": login.value,
             "password": password.value

@@ -12,9 +12,13 @@ export class ExceptionHandler {
     ]);
 
     handle(errorCode, error) {
+        const span = document.createElement("span");
+
         this.field.style.color = "red";
         this.field.style.border = "1px solid rgb(129 1 1 / 20%)";
         this.field.style.backgroundColor = "rgb(255 76 76 / 38%)";
-        this.field.textContent = this.errors.get(errorCode) + ": " + error;
+
+        span.textContent = this.errors.get(errorCode) + ": " + error;
+        this.field.append(span);
     }
 }
