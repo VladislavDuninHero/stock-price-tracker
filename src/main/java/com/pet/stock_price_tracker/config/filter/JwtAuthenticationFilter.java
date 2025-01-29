@@ -49,8 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         if (
                 request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
-                        || request.getServletPath().equalsIgnoreCase(Routes.REGISTRATION_ROUTE)
-                        || request.getServletPath().equalsIgnoreCase(Routes.API_USER_LOGOUT_ROUTE)
+                        || config.acceptedRoutesConfigurer().contains(request.getServletPath())
                         || request.getRequestURI().startsWith("/css/")
                         || request.getRequestURI().startsWith("/js/")
                         || request.getRequestURI().startsWith("/images/")
@@ -68,6 +67,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         ) {
             response.sendRedirect(Routes.LOGIN_ROUTE);
             return;
+        } else if (
+                authorizationHeader == null
+                        && request.getCookies() != null
+                        && !config.acceptedRoutesConfigurer().contains(request.getServletPath())
+        ) {
+            List<Cookie> cookies = List.of(request.getCookies());
+
+            if (!validateCookie(cookies, request, response)) {
+                response.sendRedirect(Routes.REGISTRATION_ROUTE);
+                return;
+            }
         }
 
         if (authorizationHeader != null && authorizationHeader.startsWith(OfficialProperties.BEARER_TOKEN_PREFIX)) {
@@ -101,7 +111,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authorizationHeader == null && request.getCookies() != null) {
             List<Cookie> cookies = List.of(request.getCookies());
 
-            validateCookie(cookies, request, response);
+            if (!validateCookie(cookies, request, response)) {
+                return;
+            };
         }
 
 
@@ -109,7 +121,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
 
-    private void validateCookie(
+    private boolean validateCookie(
             List<Cookie> cookies,
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
@@ -129,6 +141,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                        return true;
                     }
 
                 } catch (ExpiredJwtException e) {
@@ -137,17 +151,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
                     response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
 
-                    return;
+                    return false;
                 } catch (Exception e) {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                     UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_TOKEN.name(), e.getMessage());
                     response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
 
-                    return;
+                    return false;
                 }
             }
         }
+
+        return true;
     }
+
 
 }

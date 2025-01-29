@@ -14,9 +14,9 @@ public class Config {
     public List<String> acceptedRoutesConfigurer() {
         return List.of(
                 Routes.LOGIN_ROUTE,
+                Routes.REGISTRATION_ROUTE,
                 Routes.API_USER_LOGIN_ROUTE,
                 Routes.API_USER_REGISTRATION_ROUTE,
-                Routes.REGISTRATION_ROUTE,
                 Routes.LOGOUT_ROUTE,
                 Routes.API_USER_LOGOUT_ROUTE
         );

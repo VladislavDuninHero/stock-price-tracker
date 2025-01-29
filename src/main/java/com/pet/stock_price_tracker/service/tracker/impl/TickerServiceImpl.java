@@ -7,10 +7,7 @@ import com.pet.stock_price_tracker.client.dto.polygon.response.TickerDataIntegra
 import com.pet.stock_price_tracker.client.dto.polygon.response.TickerIntegrationResponseDTO;
 import com.pet.stock_price_tracker.entity.Ticker;
 import com.pet.stock_price_tracker.entity.User;
-import com.pet.stock_price_tracker.exception.UserNotFoundException;
 import com.pet.stock_price_tracker.repository.TickerRepository;
-import com.pet.stock_price_tracker.repository.UserRepository;
-import com.pet.stock_price_tracker.security.SecurityUser;
 import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import com.pet.stock_price_tracker.service.tracker.TickerService;
 import com.pet.stock_price_tracker.service.user.UserService;

@@ -18,20 +18,22 @@
         <main class="main-home-page">
             <section class="main__section-save-tickers-container">
                 <article class="section__article-save-ticker-container">
-                    <input class="input-field article-save-ticker__input-save-field">
-                    <button class="article-save-ticker__button-save">Save</button>
+                    <div class="article-save-ticker-container__controllers-container">
+                        <input class="input-field article-save-ticker__input-save-field" placeholder="Ticker symbol">
+                        <input class="input-field article-save-ticker__input-date-start-field" type="date">
+                        <input class="input-field article-save-ticker__input-date-end-field" type="date">
+                        <button class="article-save-ticker__button-save">Save</button>
+                    </div>
+                    <div class="article-save-ticker-container__error-container"></div>
                 </article>
-                <article class="main__section-content-ticker-container">
-                    content
+                <article class="section__article-get-ticker-container">
+                    <div class="article-get-ticker-container__controllers-container">
+                        <input class="input-field article-get-ticker__input-get-field" placeholder="Ticker symbol">
+                        <button class="article-get-ticker__button-get">Get tickers</button>
+                    </div>
+                    <div class="article-get-ticker-container__error-container"></div>
                 </article>
-            </section>
-            <section>
-                <article>
-                    search
-                </article>
-                <article>
-                    content
-                </article>
+                <article class="main__section-content-ticker-container"></article>
             </section>
         </main>
         <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>

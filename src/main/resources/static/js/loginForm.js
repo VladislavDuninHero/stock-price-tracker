@@ -47,7 +47,7 @@ document.querySelector(".main-login-page__login-form")
             })
             .then(async data => {
                 const now = new Date();
-                const daysToAdd = 7;
+                const daysToAdd = 1;
                 now.setTime(now.getTime() + (daysToAdd * 24 * 60 * 60 * 1000));
 
                 const expires = now.toUTCString();
