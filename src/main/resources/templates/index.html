@@ -13,7 +13,20 @@
 </head>
 <body>
     <div class="main-container">
-        <header class="header-home-page" th:insert="~{LogoutButton :: logout-form}">
+        <header class="header-home-page">
+            <div>
+                <div class="label">
+                    Stock Price Tracker
+                    <span>Следите за изменениями цен акций</span>
+                </div>
+            </div>
+            <section class="header-home-page__user-controllers">
+                <article
+                        class="user-controllers__personal-account-container"
+                        th:insert="~{personalAccountFragment :: personal-account(login=${login})}"
+                ></article>
+                <article class="user-controllers__logout-container" th:insert="~{LogoutButton :: logout-form}"></article>
+            </section>
         </header>
         <main class="main-home-page">
             <section class="main__section-save-tickers-container">
@@ -33,10 +46,17 @@
                     </div>
                     <div class="article-get-ticker-container__error-container"></div>
                 </article>
-                <article class="main__section-content-ticker-container"></article>
+                <article class="main__section-content-ticker-container">
+                    <span class="content-ticker-container__ticker-message">
+
+                    </span>
+                    <div class="content-ticker-container__content">
+
+                    </div>
+                </article>
             </section>
         </main>
-        <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
+        <footer class="footer-home-page" th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
     </div>
 
     <script type="module" th:src="@{/js/home/HomeListener.js}"></script>

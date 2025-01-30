@@ -3,26 +3,35 @@ import {Constant} from "../Constant.js";
 export class RenderContent {
 
     tickersContainer;
+    tickersContent;
+    personalAccountContainer;
 
     constructor() {
         this.tickersContainer = document.querySelector(".main__section-content-ticker-container");
+        this.tickersContent = document.querySelector(".content-ticker-container__content");
+        this.personalAccountContainer = document.querySelector(".personal-account-container");
     }
 
     render() {
 
-        if (this.tickersContainer.children.length === 0) {
-            let span = document.createElement("span");
-            span.classList.add("article-section-content__span-if-empty");
+        this.renderEmptyContentMessage();
+    }
+
+    renderEmptyContentMessage() {
+        let span = document.querySelector(".content-ticker-container__ticker-message");
+
+        if (
+            this.tickersContent.children.length === 0
+            && span != null
+        ) {
+
             span.textContent = Constant.TICKERS_EMPTY_MESSAGE;
 
-            this.tickersContainer.append(span);
-
-            return;
         }
 
-        let span = this.tickersContainer.querySelector(".article-section-content__span-if-empty");
-        if (span != null) {
+        if (span != null && this.tickersContent.children.length > 0) {
             span.remove();
         }
     }
+
 }

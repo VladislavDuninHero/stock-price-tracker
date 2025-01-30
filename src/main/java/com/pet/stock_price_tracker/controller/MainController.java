@@ -4,6 +4,7 @@ import com.pet.stock_price_tracker.constants.Pages;
 import com.pet.stock_price_tracker.constants.Routes;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -20,7 +21,10 @@ public class MainController {
     }
 
     @GetMapping(value = {Routes.HOME_ROUTE, Pages.HOME_PAGE})
-    public String home() {
+    public String home(Model model) {
+
+        model.addAttribute("login", SecurityContextHolder.getContext().getAuthentication().getName());
+
         return Pages.HOME_PAGE;
     }
 }

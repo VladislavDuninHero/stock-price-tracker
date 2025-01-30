@@ -51,6 +51,7 @@ export class SaveTicker {
                         this.errorSaveTickerContainerSelector.style.color = "green";
                         this.errorSaveTickerContainerSelector.style.border = "1px solid #01810133";
                         this.errorSaveTickerContainerSelector.style.backgroundColor = "#03ff0361";
+                        this.errorSaveTickerContainerSelector.textContent = "";
                         this.errorSaveTickerContainerSelector.textContent = Constant.SUCCESS_MESSAGE;
 
                         return json;
@@ -64,6 +65,8 @@ export class SaveTicker {
                             errorMessage: el.errorMessage
                         }
                     })
+
+                    this.errorSaveTickerContainerSelector.textContent = "";
 
                     throw new AggregateError(errors);
                 })
@@ -110,6 +113,7 @@ export class SaveTicker {
                         this.errorGetSavedTickersContainerSelector.style.color = "green";
                         this.errorGetSavedTickersContainerSelector.style.border = "1px solid #01810133";
                         this.errorGetSavedTickersContainerSelector.style.backgroundColor = "#03ff0361";
+                        this.errorGetSavedTickersContainerSelector.textContent = "";
                         this.errorGetSavedTickersContainerSelector.textContent = Constant.SUCCESS_MESSAGE;
 
                         return json;
@@ -123,6 +127,8 @@ export class SaveTicker {
                             errorMessage: el.errorMessage
                         }
                     })
+
+                    this.errorSaveTickerContainerSelector.textContent = "";
 
                     throw new AggregateError(errors);
                 })
@@ -167,8 +173,10 @@ export class SaveTicker {
 
                         div.append("\n");
 
-                        document.querySelector(".main__section-content-ticker-container").append(div)
+                        document.querySelector(".content-ticker-container__content").append(div)
                     })
+
+                    this.renderContentService.render();
                 })
                 .catch(error => error.errors
                     .forEach(e => this.exceptionHandler.handle(

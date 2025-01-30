@@ -14,11 +14,69 @@
 
 .header-home-page {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
     width: 100%;
-    border: 1px solid black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: linear-gradient(145deg, #0082c8, #ffffff);
+    border-radius: 10px;
+}
+
+.header-home-page__user-controllers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-controllers__personal-account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.personal-account-container {
+    border: 1px solid #bfbfbf;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.label {
+    color: #333;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-size: 35px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.label:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+    -10px -10px 20px rgba(255, 255, 255, 0.6);
+}
+
+.label:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 15px 15px 0 0;
+}
+
+.label span {
+    font-size: 18px;
+    font-weight: normal;
+    display: block;
+    margin-top: 10px;
+    color: #f1c40f;
 }
 
 .main-home-page {
@@ -27,7 +85,11 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.footer-home-page {
+    padding: 5px;
 }
 
 .section__article-get-ticker-container {
@@ -122,8 +184,20 @@
 }
 
 .main__section-content-ticker-container {
-    margin: 5px;
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     border-top: 1px solid #bfbfbf;
+}
+
+.content-ticker-container__ticker-message {
+    margin-top: 5px;
+}
+
+.content-ticker-container__content {
+    margin: 5px;
     min-width: 50rem;
     min-height: 5rem;
     max-height: 35rem;

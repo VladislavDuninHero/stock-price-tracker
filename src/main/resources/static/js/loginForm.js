@@ -1,7 +1,6 @@
 import {Constant} from "./Constant.js";
 import {ExceptionHandler} from "./ExceptionHandler.js";
 
-
 document.querySelector(".main-login-page__login-form")
     .addEventListener("submit", (e) => {
         e.preventDefault();
