@@ -40,6 +40,32 @@
     border: 1px solid #bfbfbf;
     border-radius: 10px;
     padding: 5px;
+    min-width: 3.5rem;
+    min-height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #007aff, #00bfff, #3affc2, #3bff00, #007bff);
+    background-size: 400% 400%;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+
+.personal-account-container:hover {
+    animation: gradientAnimation 2s ease alternate;
+    filter: brightness(1.1);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%; /* Начальная позиция фона */
+    }
+    50% {
+        background-position: 100% 50%; /* Позиция в середине анимации */
+    }
+    100% {
+        background-position: 100% 100%; /* Конечная позиция фона */
+    }
 }
 
 .label {

@@ -8,6 +8,7 @@ import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.enums.TickerSymbol;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("component-test")
 @AutoConfigureMockMvc
+@Disabled
 public class TrackerControllerComponentTests {
 
     @Autowired

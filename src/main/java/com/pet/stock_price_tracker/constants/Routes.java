@@ -17,4 +17,7 @@ public final class Routes {
     public static final String API_V1_TRACKER_ROUTE = "/api/v1/tracker";
     public static final String STOCK_TICKER_SAVE_ROUTE = "/save";
     public static final String STOCK_TICKER_GET_SAVED_ROUTE = "/saved";
+
+    public static final String ACTUATOR_ROUTE = "/actuator/**";
+    public static final String ACTUATOR_PROMETHEUS_ROUTE = "/actuator/prometheus";
 }
