@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, Routes.LOGIN_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.POST, Routes.LOGOUT_ROUTE).permitAll()
                                 .requestMatchers(HttpMethod.GET, Routes.REGISTRATION_ROUTE).permitAll()
+                                .requestMatchers(HttpMethod.GET, Routes.ACTUATOR_PROMETHEUS_ROUTE).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

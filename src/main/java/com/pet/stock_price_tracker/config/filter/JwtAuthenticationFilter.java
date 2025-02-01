@@ -47,9 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+
+        String requestPath = request.getServletPath();
+
         if (
                 request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
-                        || config.acceptedRoutesConfigurer().contains(request.getServletPath())
+                        || config.acceptedRoutesConfigurer().contains(requestPath)
                         || request.getRequestURI().startsWith("/css/")
                         || request.getRequestURI().startsWith("/js/")
                         || request.getRequestURI().startsWith("/images/")
@@ -64,19 +67,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (
                 authorizationHeader == null
                         && request.getCookies() == null
-                        && !config.acceptedRoutesConfigurer().contains(request.getServletPath())
+                        && !config.acceptedRoutesConfigurer().contains(requestPath)
         ) {
             response.sendRedirect(Routes.LOGIN_ROUTE);
             return;
         } else if (
                 authorizationHeader == null
                         && request.getCookies() != null
-                        && !config.acceptedRoutesConfigurer().contains(request.getServletPath())
+                        && !config.acceptedRoutesConfigurer().contains(requestPath)
         ) {
             List<Cookie> cookies = List.of(request.getCookies());
 
             if (!validateCookie(cookies, request, response)) {
-                response.sendRedirect(Routes.REGISTRATION_ROUTE);
+                response.sendRedirect(Routes.LOGIN_ROUTE);
                 return;
             }
         }
@@ -109,7 +112,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        if (authorizationHeader == null && request.getCookies() != null) {
+        if (
+                authorizationHeader == null
+                        && request.getCookies() != null
+                        && !config.acceptedRoutesConfigurer().contains(requestPath)
+        ) {
             List<Cookie> cookies = List.of(request.getCookies());
 
             if (!validateCookie(cookies, request, response)) {
