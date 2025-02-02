@@ -1,13 +1,19 @@
 package com.pet.stock_price_tracker.service.security.jwt.impl;
 
+import com.pet.stock_price_tracker.entity.Permission;
+import com.pet.stock_price_tracker.entity.Role;
 import com.pet.stock_price_tracker.properties.JwtSecretProperties;
+import com.pet.stock_price_tracker.repository.UserRepository;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
+import com.pet.stock_price_tracker.service.user.UserService;
+import com.pet.stock_price_tracker.service.user.roles.RoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -22,6 +28,8 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateAccessToken(String login) {
         Map<String, Object> claims = new HashMap<>();
+
+
 
         return Jwts.builder()
                 .addClaims(claims)

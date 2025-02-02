@@ -7,13 +7,18 @@ import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
 import com.pet.stock_price_tracker.entity.User;
+import com.pet.stock_price_tracker.enums.Roles;
 import com.pet.stock_price_tracker.exception.UserNotFoundException;
 import com.pet.stock_price_tracker.repository.UserRepository;
+import com.pet.stock_price_tracker.service.user.roles.RoleService;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import com.pet.stock_price_tracker.service.user.UserService;
 import com.pet.stock_price_tracker.service.utils.mapping.UserMapper;
 import com.pet.stock_price_tracker.service.validation.manager.impl.UserLoginValidationManager;
 import com.pet.stock_price_tracker.service.validation.manager.impl.UserRegistrationValidationManager;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private final UserRegistrationValidationManager userRegistrationValidationManager;
     private final UserLoginValidationManager userLoginValidationManager;
     private final JwtService jwtService;
+    private final RoleService roleService;
 
     public UserServiceImpl(
             UserRepository userRepository,
@@ -36,7 +42,8 @@ public class UserServiceImpl implements UserService {
             PasswordEncoder passwordEncoder,
             UserRegistrationValidationManager userRegistrationValidationManager,
             UserLoginValidationManager userLoginValidationManager,
-            JwtService jwtService
+            JwtService jwtService,
+            RoleService roleService
     ) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
@@ -44,6 +51,7 @@ public class UserServiceImpl implements UserService {
         this.userRegistrationValidationManager = userRegistrationValidationManager;
         this.userLoginValidationManager = userLoginValidationManager;
         this.jwtService = jwtService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -53,6 +61,8 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        roleService.createRoleForUser(user, Roles.USER);
 
         User savedUser = userRepository.save(user);
 

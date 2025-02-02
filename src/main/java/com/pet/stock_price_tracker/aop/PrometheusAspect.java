@@ -23,6 +23,9 @@ public class PrometheusAspect {
     @Pointcut("execution(public * com.pet.stock_price_tracker.service.tracker.impl.TickerServiceImpl.getSavedTickers(..))")
     public void savedTickersPointcut() {}
 
+    @Pointcut("execution(public * com.pet.stock_price_tracker.service.user.impl.UserServiceImpl.createUser(..))")
+    public void registerUserPointcut() {}
+
     @After("saveTickersPointcut()")
     public void afterSaveTickersPointcut() {
         prometheusMeterRegistry.counter(OfficialProperties.PROMETHEUS_SAVE_TICKERS_REQUESTS_COUNTER).increment();
@@ -31,5 +34,10 @@ public class PrometheusAspect {
     @After("savedTickersPointcut()")
     public void afterSavedTickersPointcut() {
         prometheusMeterRegistry.counter(OfficialProperties.PROMETHEUS_SAVED_TICKERS_REQUESTS_COUNTER).increment();
+    }
+
+    @After("registerUserPointcut()")
+    public void afterRegisterUserPointcut() {
+        prometheusMeterRegistry.counter(OfficialProperties.PROMETHEUS_REGISTRATION_USER_REQUESTS_COUNTER).increment();
     }
 }
