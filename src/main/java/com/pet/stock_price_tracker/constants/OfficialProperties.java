@@ -5,4 +5,5 @@ public final class OfficialProperties {
     public static final String BEARER_TOKEN_PREFIX = "Bearer ";
     public static final String PROMETHEUS_SAVED_TICKERS_REQUESTS_COUNTER = "saved_requests";
     public static final String PROMETHEUS_SAVE_TICKERS_REQUESTS_COUNTER = "save_requests";
+    public static final String PROMETHEUS_REGISTRATION_USER_REQUESTS_COUNTER = "user_registration_requests";
 }

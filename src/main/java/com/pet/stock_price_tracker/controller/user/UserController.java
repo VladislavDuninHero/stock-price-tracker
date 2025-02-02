@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping(Routes.REGISTRATION_ROUTE)
     public ResponseEntity<UserResponseDTO> registration(@RequestBody @Validated UserDTO userDTO) {
 
-        UserResponseDTO user = userService.createUser(userDTO);
+        UserResponseDTO user = userService.createUser(userDTO);;
 
         return ResponseEntity.created(URI.create(Routes.LOGIN_ROUTE)).body(user);
     }
