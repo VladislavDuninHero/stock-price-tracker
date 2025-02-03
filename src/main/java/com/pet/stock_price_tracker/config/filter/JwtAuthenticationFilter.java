@@ -6,7 +6,10 @@ import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
+import com.pet.stock_price_tracker.entity.Permission;
+import com.pet.stock_price_tracker.entity.Role;
 import com.pet.stock_price_tracker.enums.ErrorCode;
+import com.pet.stock_price_tracker.enums.PermissionType;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -19,7 +22,10 @@ import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,6 +33,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -34,11 +41,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
     private final Config config;
+    private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, ObjectMapper objectMapper, Config config) {
+    public JwtAuthenticationFilter(
+            JwtService jwtService,
+            ObjectMapper objectMapper,
+            Config config,
+            UserDetailsService userDetailsService
+    ) {
         this.jwtService = jwtService;
         this.objectMapper = objectMapper;
         this.config = config;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -93,8 +107,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String login = validated.getSubject();
 
                 if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(login);
+
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            login, null, Collections.emptyList()
+                            login,
+                            null,
+                            userDetails.getAuthorities()
                     );
 
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

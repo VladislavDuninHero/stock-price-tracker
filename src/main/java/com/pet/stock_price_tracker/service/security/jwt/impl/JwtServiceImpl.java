@@ -3,33 +3,33 @@ package com.pet.stock_price_tracker.service.security.jwt.impl;
 import com.pet.stock_price_tracker.entity.Permission;
 import com.pet.stock_price_tracker.entity.Role;
 import com.pet.stock_price_tracker.properties.JwtSecretProperties;
-import com.pet.stock_price_tracker.repository.UserRepository;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
-import com.pet.stock_price_tracker.service.user.UserService;
 import com.pet.stock_price_tracker.service.user.roles.RoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class JwtServiceImpl implements JwtService {
 
     private final JwtSecretProperties jwtSecretProperties;
+    private final RoleService roleService;
 
-    public JwtServiceImpl(JwtSecretProperties jwtSecretProperties) {
+    public JwtServiceImpl(JwtSecretProperties jwtSecretProperties, RoleService roleService) {
         this.jwtSecretProperties = jwtSecretProperties;
+        this.roleService = roleService;
     }
 
     @Override
     public String generateAccessToken(String login) {
         Map<String, Object> claims = new HashMap<>();
 
+        Set<Permission> permissions = extractPermissions(roleService.getRoleForUser(login));
+        List<String> authorities = permissions.stream().map(Permission::getAuthority).toList();
 
+        claims.put("authorities", authorities);
 
         return Jwts.builder()
                 .addClaims(claims)
@@ -75,5 +75,16 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    @Override
+    public Set<Permission> extractPermissions(List<Role> roles) {
+        Set<Permission> permissions = new HashSet<>();
+
+        for (Role role : roles) {
+            permissions.addAll(role.getPermissions());
+        }
+
+        return permissions;
     }
 }

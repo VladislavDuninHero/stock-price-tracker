@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         Optional<User> user = userRepository.findUserByLogin(username);
-        System.out.println(user.get().getRoles().get(0));
+
         return user.map(SecurityUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
