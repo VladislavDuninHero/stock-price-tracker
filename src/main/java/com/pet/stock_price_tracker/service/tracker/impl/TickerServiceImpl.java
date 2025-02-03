@@ -13,6 +13,7 @@ import com.pet.stock_price_tracker.service.tracker.TickerService;
 import com.pet.stock_price_tracker.service.user.UserService;
 import com.pet.stock_price_tracker.service.utils.mapping.TickerMapper;
 import com.pet.stock_price_tracker.service.validation.manager.impl.TickerRequestValidationManager;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -72,10 +73,11 @@ public class TickerServiceImpl implements TickerService {
     }
 
     @Override
+    @PreAuthorize("hasAuthority('GET_TICKERS_PERMISSION')")
     public TickerDTO getSavedTickers(String symbol) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserEntityByLogin(login);
-
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         List<Ticker> tickers = tickerRepository.findBySymbolAndUserId(symbol, user.getId());
 
         List<TickerDataDTO> tickersData = tickers.stream().map(tickerMapper::toTickerDataDTO).toList();
