@@ -8,7 +8,6 @@ import com.pet.stock_price_tracker.enums.ErrorCode;
 import com.pet.stock_price_tracker.exception.DateValidationException;
 import com.pet.stock_price_tracker.exception.IntegrationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.method.ParameterValidationResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestControllerAdvice(basePackageClasses = StockTrackerController.class)
