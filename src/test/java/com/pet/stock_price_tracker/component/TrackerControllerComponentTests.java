@@ -48,7 +48,6 @@ public class TrackerControllerComponentTests {
     private UserService userService;
 
     @Test
-    @WithMockUser(username = "saveTickerUserLogin")
     public void tracker_SaveTickersWithValidData_ReturnsValidEntity() throws Exception {
         //given
         UserDTO userDTO = new UserDTO(
@@ -99,7 +98,6 @@ public class TrackerControllerComponentTests {
     }
 
     @Test
-    @WithMockUser(username = "saveTickerUserLogin")
     public void tracker_GetSavedTickers_ReturnsValidEntity() throws Exception {
         //given
         UserDTO userDTO = new UserDTO(
