@@ -31,7 +31,9 @@ public class PolygonIntegrationService implements PolygonService {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        int multiplier = dateCalculator(tickerRequestDTO.getStart(), tickerRequestDTO.getEnd());
+        int multiplier = tickerRequestDTO.getStart()
+                .minusDays(tickerRequestDTO.getEnd().getDayOfMonth())
+                .getDayOfMonth();
         String ticker = tickerRequestDTO.getTicker();
         String timespan = TimespanType.DAY.name().toLowerCase();
         String from = tickerRequestDTO.getStart().format(dateFormatter);
@@ -45,11 +47,5 @@ public class PolygonIntegrationService implements PolygonService {
         } catch (Exception e) {
             throw new IntegrationException(e.getMessage());
         }
-    }
-
-    private int dateCalculator(LocalDate start, LocalDate end) {
-        return end.getDayOfMonth() - start.getDayOfMonth() <= MIN_DAY_COUNT
-                ? 1
-                : end.getDayOfMonth() - start.getDayOfMonth();
     }
 }

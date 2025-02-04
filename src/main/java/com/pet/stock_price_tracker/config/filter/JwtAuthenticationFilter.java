@@ -62,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String requestPath = request.getServletPath();
+        String requestPath = request.getRequestURI();
 
         if (
                 request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
@@ -158,7 +158,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     Claims validated = jwtService.validateToken(cookie.getValue());
                     String login = validated.getSubject();
-
+                    System.out.println(SecurityContextHolder.getContext().getAuthentication());
                     if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                                 login, null, Collections.emptyList()

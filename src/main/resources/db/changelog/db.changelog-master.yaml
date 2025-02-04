@@ -11,3 +11,7 @@ databaseChangeLog:
       file: db/changelog/changeset/create-sequence-if-not-exists-for-user-table.sql
   - include:
       file: db/changelog/changeset/create-sequence-if-not-exists-for-tickers-table.sql
+  - include:
+      file: db/changelog/changeset/create-role-table.sql
+  - include:
+      file: db/changelog/changeset/create-permissions-table.sql

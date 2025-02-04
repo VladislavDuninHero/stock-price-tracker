@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("component-test")
 @AutoConfigureMockMvc
-@Disabled
+
 public class UserControllerComponentTests {
 
     @Autowired
