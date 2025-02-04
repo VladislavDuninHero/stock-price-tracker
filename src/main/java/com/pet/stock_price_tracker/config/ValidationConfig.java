@@ -7,7 +7,6 @@ import com.pet.stock_price_tracker.service.validation.config.ValidationConfigura
 import com.pet.stock_price_tracker.service.validation.validators.BaseValidator;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;

@@ -6,10 +6,7 @@ import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.OfficialProperties;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
-import com.pet.stock_price_tracker.entity.Permission;
-import com.pet.stock_price_tracker.entity.Role;
 import com.pet.stock_price_tracker.enums.ErrorCode;
-import com.pet.stock_price_tracker.enums.PermissionType;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -22,7 +19,6 @@ import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,7 +29,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -62,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String requestPath = request.getServletPath();
+        String requestPath = request.getRequestURI();
 
         if (
                 request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
@@ -158,7 +153,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     Claims validated = jwtService.validateToken(cookie.getValue());
                     String login = validated.getSubject();
-
+                    System.out.println(SecurityContextHolder.getContext().getAuthentication());
                     if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                                 login, null, Collections.emptyList()

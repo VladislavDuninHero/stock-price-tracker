@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-
 @FeignClient(name = "${feign.integration.polygon.name}", url = "${feign.integration.polygon-v2.url}")
 public interface Polygon {
 

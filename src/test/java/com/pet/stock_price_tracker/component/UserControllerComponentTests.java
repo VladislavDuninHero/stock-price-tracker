@@ -6,7 +6,6 @@ import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("component-test")
 @AutoConfigureMockMvc
-@Disabled
 public class UserControllerComponentTests {
 
     @Autowired
