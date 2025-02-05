@@ -13,4 +13,7 @@ export class Constant {
 
     static TICKERS_EMPTY_FIELD = ".article-section-content__span-if-empty";
     static TICKERS_EMPTY_MESSAGE = "Tickers is not added";
+
+    static COOKIE_TOKEN = "token";
+    static BEARER = "Bearer ";
 }

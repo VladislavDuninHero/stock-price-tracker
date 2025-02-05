@@ -77,7 +77,7 @@ public class TickerServiceImpl implements TickerService {
     public TickerDTO getSavedTickers(String symbol) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserEntityByLogin(login);
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
         List<Ticker> tickers = tickerRepository.findBySymbolAndUserId(symbol, user.getId());
 
         List<TickerDataDTO> tickersData = tickers.stream().map(tickerMapper::toTickerDataDTO).toList();

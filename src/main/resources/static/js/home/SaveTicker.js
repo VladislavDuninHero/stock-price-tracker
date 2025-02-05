@@ -1,6 +1,7 @@
 import {Constant} from "../Constant.js";
 import {ExceptionHandler} from "../ExceptionHandler.js";
 import {RenderContent} from "./RenderContent.js";
+import {CookieHandler} from "./CookieHandler.js";
 
 export class SaveTicker {
 
@@ -9,6 +10,8 @@ export class SaveTicker {
     errorGetSavedTickersContainerSelector;
     errorSaveTickerContainerSelector;
     exceptionHandler;
+    cookieHandler;
+    cookieValue;
 
     constructor() {
         this.saveButtonSelector = document.querySelector(".article-save-ticker__button-save");
@@ -16,6 +19,8 @@ export class SaveTicker {
         this.errorGetSavedTickersContainerSelector = document.querySelector(".article-get-ticker-container__error-container");
         this.errorSaveTickerContainerSelector = document.querySelector(".article-save-ticker-container__error-container");
         this.renderContentService = new RenderContent();
+        this.cookieHandler = new CookieHandler();
+        this.cookieValue = this.cookieHandler.getCookie(Constant.COOKIE_TOKEN);
     }
 
     save() {
@@ -32,6 +37,8 @@ export class SaveTicker {
 
             this.exceptionHandler = new ExceptionHandler(this.errorSaveTickerContainerSelector);
 
+
+
             this.saveButtonSelector.disabled = true;
 
             fetch("api/v1/tracker/save", {
@@ -39,6 +46,7 @@ export class SaveTicker {
                 credentials: "include",
                 headers: {
                     "Content-type": "application/json",
+                    "Authorization": Constant.BEARER + this.cookieValue
                 },
                 body: JSON.stringify(data)
             })
@@ -100,6 +108,7 @@ export class SaveTicker {
                 credentials: "include",
                 headers: {
                     "Content-type": "application/json",
+                    "Authorization": Constant.BEARER + this.cookieValue
                 }
             })
                 .then(async response => {
