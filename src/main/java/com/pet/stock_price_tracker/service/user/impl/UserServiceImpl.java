@@ -6,6 +6,8 @@ import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
+import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordDTO;
+import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordResponseDTO;
 import com.pet.stock_price_tracker.entity.User;
 import com.pet.stock_price_tracker.enums.Roles;
 import com.pet.stock_price_tracker.exception.UserNotFoundException;
@@ -109,5 +111,13 @@ public class UserServiceImpl implements UserService {
         Optional<User> foundUser = userRepository.findUserByLogin(login);
 
         return foundUser.orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND_EXCEPTION));
+    }
+
+    @Override
+    public RestorePasswordResponseDTO restorePassword(RestorePasswordDTO restorePasswordDTO) {
+
+        
+
+        return null;
     }
 }
