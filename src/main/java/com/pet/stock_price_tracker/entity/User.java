@@ -29,6 +29,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -52,6 +55,7 @@ public class User {
         return Objects.equals(id, user.id)
                 && Objects.equals(login, user.login)
                 && Objects.equals(password, user.password)
+                && Objects.equals(email, user.email)
                 && Objects.equals(createdAt, user.createdAt)
                 && Objects.equals(updatedAt, user.updatedAt);
     }

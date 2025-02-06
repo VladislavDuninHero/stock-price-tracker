@@ -7,6 +7,7 @@ document.querySelector(".main-registration-page__registration-form")
 
         const login = document.querySelector(".registration-form__login-field");
         const password = document.querySelector(".registration-form__password-field");
+        const email = document.querySelector(".registration-form__email-field");
         const field = document.querySelector(Constant.REGISTRATION_FORM_ERROR_CONTAINER);
         const exceptionHandler = new ExceptionHandler(field);
 
@@ -14,7 +15,8 @@ document.querySelector(".main-registration-page__registration-form")
 
         const userData = {
             "login": login.value,
-            "password": password.value
+            "password": password.value,
+            "email": email.value
         };
 
         fetch(Constant.REGISTRATION_URL, {

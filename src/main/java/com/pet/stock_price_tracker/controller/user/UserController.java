@@ -7,6 +7,8 @@ import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
+import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordDTO;
+import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordResponseDTO;
 import com.pet.stock_price_tracker.service.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -51,5 +53,13 @@ public class UserController {
     @GetMapping
     public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @PostMapping(Routes.USER_RESTORE_PASSWORD_ROUTE)
+    public ResponseEntity<RestorePasswordResponseDTO> restorePassword(@RequestBody @Validated RestorePasswordDTO restorePasswordDTO) {
+
+        RestorePasswordResponseDTO restorePasswordResponseDTO = userService.restorePassword(restorePasswordDTO);
+
+        return ResponseEntity.ok(restorePasswordResponseDTO);
     }
 }
