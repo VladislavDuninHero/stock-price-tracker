@@ -18,5 +18,6 @@ public interface UserService {
     JwtDTO refreshToken(String refreshToken);
     List<UserResponseDTO> getAllUsers();
     User findUserEntityByLogin(String login);
-    RestorePasswordResponseDTO restorePassword(RestorePasswordDTO restorePasswordDTO);
+    User findUserEntityByEmail(String email);
+    void restorePassword(RestorePasswordDTO restorePasswordDTO);
 }

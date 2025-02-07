@@ -8,6 +8,7 @@
     <link type="text/css" rel="stylesheet" th:href="@{/css/login.css}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/footerWithUserLinks.css}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/restorePassword.css}">
     <title>Stock price tracker</title>
 </head>
     <body>
@@ -20,6 +21,7 @@
                     </label>
                     <input class="input-field login-form__login-field" placeholder="login"/>
                     <input class="input-field login-form__password-field" placeholder="password"/>
+                    <div th:insert="~{restorePasswordFragment :: restore-password}"></div>
                     <article class="login-form__login-form-controllers">
                         <button class="login-form__login-button">Submit</button>
                         <a class="login-form__redirect-link" href="registration">Sign up</a>

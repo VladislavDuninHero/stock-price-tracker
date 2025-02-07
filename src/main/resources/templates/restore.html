@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/restore.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/footerWithUserLinks.css}">
+    <title>Restore password</title>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header-restore-password-page"></header>
+        <main class="main-restore-password-page">
+            <section class="restore-password-container">
+                <form class="restore-password-container__restore-password-form">
+                    <label for="reset-password-field" class="restore-password-form__restore-password-form-label">
+                        Restore password
+                    </label>
+                    <input
+                            type="email"
+                            class="input-field restore-password-form__email-field"
+                            id="reset-password-field"
+                            placeholder="email"
+                    >
+                    <article class="restore-password-form__restore-password-form-controllers">
+                        <button class="restore-password-form-controllers__send-mail-button">Send</button>
+                        <a class="restore-password-form-controllers__redirect-link" href="login">Sign in</a>
+                    </article>
+                </form>
+                <p>Отправьте ссылку для восстановления пароля на ваш email</p>
+            </section>
+        </main>
+        <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
+    </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.pet.stock_price_tracker.service.user.impl;
 
+import com.pet.stock_price_tracker.config.MailConfig;
 import com.pet.stock_price_tracker.constants.ExceptionMessage;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
@@ -20,6 +21,8 @@ import com.pet.stock_price_tracker.service.validation.manager.impl.UserLoginVali
 import com.pet.stock_price_tracker.service.validation.manager.impl.UserRegistrationValidationManager;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,8 @@ public class UserServiceImpl implements UserService {
     private final UserLoginValidationManager userLoginValidationManager;
     private final JwtService jwtService;
     private final RoleService roleService;
+    private final JavaMailSender mailSender;
+    private final MailConfig mailConfig;
 
     public UserServiceImpl(
             UserRepository userRepository,
@@ -45,7 +50,9 @@ public class UserServiceImpl implements UserService {
             UserRegistrationValidationManager userRegistrationValidationManager,
             UserLoginValidationManager userLoginValidationManager,
             JwtService jwtService,
-            RoleService roleService
+            RoleService roleService,
+            JavaMailSender mailSender,
+            MailConfig mailConfig
     ) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
@@ -54,6 +61,8 @@ public class UserServiceImpl implements UserService {
         this.userLoginValidationManager = userLoginValidationManager;
         this.jwtService = jwtService;
         this.roleService = roleService;
+        this.mailSender = mailSender;
+        this.mailConfig = mailConfig;
     }
 
     @Override
@@ -114,10 +123,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RestorePasswordResponseDTO restorePassword(RestorePasswordDTO restorePasswordDTO) {
+    public User findUserEntityByEmail(String email) {
+        Optional<User> user = userRepository.findUserByEmail(email);
 
-        
+        return user.orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND_EXCEPTION));
+    }
 
-        return null;
+    @Override
+    public void restorePassword(RestorePasswordDTO restorePasswordDTO) {
+        User user = findUserEntityByEmail(restorePasswordDTO.getEmail());
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreply@gmail.com");
+        message.setTo(user.getEmail());
+        message.setSubject("Restore Password");
+        message.setText("text");
+
+        mailConfig.getJavaMailSender().send(message);
     }
 }

@@ -27,4 +27,9 @@ public class MainController {
 
         return Pages.HOME_PAGE;
     }
+
+    @GetMapping(Routes.USER_RESTORE_PASSWORD_ROUTE)
+    public String restore() {
+        return Pages.RESTORE_PAGE;
+    }
 }

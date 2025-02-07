@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         String requestPath = request.getRequestURI();
-
+        System.out.println(requestPath);
         if (
                 request.getServletPath().equalsIgnoreCase(Routes.LOGIN_ROUTE)
                         || config.acceptedRoutesConfigurer().contains(requestPath)

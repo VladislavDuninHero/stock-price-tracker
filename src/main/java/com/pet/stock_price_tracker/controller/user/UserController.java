@@ -1,8 +1,10 @@
 package com.pet.stock_price_tracker.controller.user;
 
+import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
 import com.pet.stock_price_tracker.dto.security.RefreshAccessTokenDTO;
+import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
@@ -56,10 +58,10 @@ public class UserController {
     }
 
     @PostMapping(Routes.USER_RESTORE_PASSWORD_ROUTE)
-    public ResponseEntity<RestorePasswordResponseDTO> restorePassword(@RequestBody @Validated RestorePasswordDTO restorePasswordDTO) {
+    public ResponseEntity<MessageDTO> restorePassword(@RequestBody @Validated RestorePasswordDTO restorePasswordDTO) {
 
-        RestorePasswordResponseDTO restorePasswordResponseDTO = userService.restorePassword(restorePasswordDTO);
+        userService.restorePassword(restorePasswordDTO);
 
-        return ResponseEntity.ok(restorePasswordResponseDTO);
+        return ResponseEntity.ok(new MessageDTO(Message.SUCCESS_MESSAGE));
     }
 }

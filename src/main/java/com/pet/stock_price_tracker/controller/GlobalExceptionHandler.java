@@ -6,6 +6,7 @@ import com.pet.stock_price_tracker.enums.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,15 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ValidationErrorDTO<UserErrorDTO> onExpiredJwtException(ExpiredJwtException ex) {
+        UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), ex.getLocalizedMessage());
+
+        return new ValidationErrorDTO<>(List.of(userErrorDTO));
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ValidationErrorDTO<UserErrorDTO> onExpiredJwtException(HttpRequestMethodNotSupportedException ex) {
         UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), ex.getLocalizedMessage());
 
         return new ValidationErrorDTO<>(List.of(userErrorDTO));

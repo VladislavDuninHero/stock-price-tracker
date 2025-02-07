@@ -12,7 +12,15 @@
     font-family: sans-serif;
 }
 
-.main-login-page {
+.header-restore-password-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.main-restore-password-page {
     display: flex;
     color: black;
     justify-content: space-evenly;
@@ -24,26 +32,14 @@
     min-height: 6rem;
 }
 
-.login-form__error-container {
-    text-align: center;
-    min-width: 15rem;
-    min-height: 2rem;
-    border-radius: 5px;
+.restore-password-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    flex-direction: column;
 }
 
-.login-form__login-form-label {
-    text-align: center;
-    font-size: larger;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-.main-login-page__login-form {
+.restore-password-container__restore-password-form {
     display: flex;
     margin: 10px;
     padding: 5px;
@@ -55,22 +51,20 @@
     border-radius: 5px;
 }
 
-.input-field {
-    border-radius: 10px;
+.restore-password-form__email-field {
+
+}
+
+.restore-password-form__restore-password-form-controllers {
+    display: flex;
+    justify-content: space-around;
     width: 100%;
-    margin: 5px;
+    align-items: center;
     padding: 5px;
-    min-height: 2.5rem;
-    border: 1px solid #bfbfbf;
-}
-.login-form__login-field {
-
-}
-.password-form__login-field {
-
+    margin-top: 15px;
 }
 
-.login-form__login-button {
+.restore-password-form-controllers__send-mail-button {
     border-radius: 5px;
     margin: 5px;
     padding: 5px;
@@ -80,36 +74,19 @@
     color: white;
     background-color: #004eff;
 }
-.login-form__login-button:active {
+.restore-password-form-controllers__send-mail-button:active {
     transform: scale(0.9);
 }
-.login-form__login-button:hover {
+.restore-password-form-controllers__send-mail-button:hover {
     background-color: #54a1e1;
     transition: ease-in-out 0.2s all;
 }
 
-.header-login-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.input-field {
+    border-radius: 10px;
+    margin: 5px;
     width: 100%;
-}
-
-.login-form__login-form-controllers {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    align-items: center;
     padding: 5px;
-    margin-top: 15px;
-}
-
-.login-form__redirect-link:hover {
-    color: #008cff;
-    transition: ease-in-out 0.2s all;
-}
-.login-form__redirect-link:active {
-    transform: scale(0.9);
-    transition: ease-in-out 0.2s all;
+    min-height: 2.5rem;
+    border: 1px solid #bfbfbf;
 }
