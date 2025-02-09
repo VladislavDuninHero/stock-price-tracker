@@ -72,7 +72,6 @@
 
 .registration-form__registration-button {
     border-radius: 5px;
-    margin: 5px;
     padding: 5px;
     cursor: pointer;
     min-height: 2.5rem;
@@ -113,4 +112,3 @@
     transform: scale(0.9);
     transition: ease-in-out 0.2s all;
 }
-

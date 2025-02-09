@@ -18,7 +18,10 @@ public class Config {
                 Routes.API_USER_LOGIN_ROUTE,
                 Routes.API_USER_REGISTRATION_ROUTE,
                 Routes.LOGOUT_ROUTE,
-                Routes.API_USER_LOGOUT_ROUTE
+                Routes.API_USER_LOGOUT_ROUTE,
+                Routes.USER_RESTORE_PASSWORD_ROUTE,
+                Routes.USER_RESTORE_PASSWORD_UPDATE_ROUTE,
+                Routes.API_USER_RESTORE_PASSWORD_ROUTE
         );
     }
 }

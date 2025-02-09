@@ -17,6 +17,11 @@ export class ExceptionHandler {
         this.field.style.color = "red";
         this.field.style.border = "1px solid rgb(129 1 1 / 20%)";
         this.field.style.backgroundColor = "rgb(255 76 76 / 38%)";
+        this.field.style.borderRadius = "5px";
+        this.field.style.padding = "5px";
+        this.field.style.display = "flex"
+        this.field.style.justifyContent = "center"
+        this.field.style.alignItems = "center"
 
         span.textContent = this.errors.get(errorCode) + ": " + error;
         this.field.append(span);

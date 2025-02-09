@@ -3,6 +3,7 @@ package com.pet.stock_price_tracker.config;
 import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
+import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
 import com.pet.stock_price_tracker.service.validation.config.ValidationConfigurable;
 import com.pet.stock_price_tracker.service.validation.validators.BaseValidator;
 import jakarta.annotation.PostConstruct;
@@ -20,18 +21,21 @@ public class ValidationConfig {
     private final List<BaseValidator<UserDTO>> userRegistrationValidators;
     private final List<BaseValidator<UserLoginDTO>> userLoginValidators;
     private final List<BaseValidator<TickerRequestDTO>> tickerRequestValidators;
+    private final List<BaseValidator<UpdateRestorePasswordDTO>> updateRestorePasswordValidators;
 
     public ValidationConfig(
             ValidationConfigurable configurator,
             List<BaseValidator<UserDTO>> userRegistrationValidators,
             List<BaseValidator<UserLoginDTO>> userLoginValidators,
-            List<BaseValidator<TickerRequestDTO>> tickerRequestValidators
+            List<BaseValidator<TickerRequestDTO>> tickerRequestValidators,
+            List<BaseValidator<UpdateRestorePasswordDTO>> updateRestorePasswordValidators
     ) {
         this.configurator = configurator;
 
         this.userRegistrationValidators = userRegistrationValidators;
         this.userLoginValidators = userLoginValidators;
         this.tickerRequestValidators = tickerRequestValidators;
+        this.updateRestorePasswordValidators = updateRestorePasswordValidators;
     }
 
     @PostConstruct
@@ -47,5 +51,10 @@ public class ValidationConfig {
     @PostConstruct
     public List<BaseValidator<TickerRequestDTO>> configureTickerRequestValidators() {
         return configurator.config(tickerRequestValidators);
+    }
+
+    @PostConstruct
+    public List<BaseValidator<UpdateRestorePasswordDTO>> configurePasswordRestoreValidators() {
+        return configurator.config(updateRestorePasswordValidators);
     }
 }

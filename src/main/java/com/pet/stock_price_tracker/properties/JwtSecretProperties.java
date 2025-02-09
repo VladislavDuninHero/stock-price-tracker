@@ -18,6 +18,7 @@ public class JwtSecretProperties {
     private String secret;
     private final Integer accessExpirationDate = 60 * 60 * 1000;
     private final Integer refreshExpirationDate = 2 * 7 * 24 * 60 * 60 * 1000;
+    private final Integer restorePasswordExpirationDate = 60 * 60 * 24 * 1000;
 
     public SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));

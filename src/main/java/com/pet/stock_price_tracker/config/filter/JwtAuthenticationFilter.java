@@ -10,6 +10,7 @@ import com.pet.stock_price_tracker.enums.ErrorCode;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -67,6 +68,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         || request.getRequestURI().startsWith("/images/")
 
         ) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (requestPath.equalsIgnoreCase(Routes.API_USER_RESTORE_PASSWORD_UPDATE_ROUTE)) {
+
+            String token = request.getParameter("token");
+
+            if (token != null) {
+                try {
+                    jwtService.validateToken(token);
+                } catch (ExpiredJwtException e) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                    UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
+                    response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+                    return;
+                } catch (SignatureException e) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                    UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_TOKEN.name(), e.getMessage());
+                    response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+                    return;
+                }
+            }
+
             filterChain.doFilter(request, response);
             return;
         }
