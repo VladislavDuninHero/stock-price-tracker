@@ -2,6 +2,7 @@ package com.pet.stock_price_tracker.controller.user;
 
 import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.constants.Routes;
+import com.pet.stock_price_tracker.controller.MainController;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
 import com.pet.stock_price_tracker.dto.security.RefreshAccessTokenDTO;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
@@ -11,6 +12,7 @@ import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserResponseDTO;
 import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordDTO;
 import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordResponseDTO;
+import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
 import com.pet.stock_price_tracker.service.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -58,9 +60,26 @@ public class UserController {
     }
 
     @PostMapping(Routes.USER_RESTORE_PASSWORD_ROUTE)
-    public ResponseEntity<MessageDTO> restorePassword(@RequestBody @Validated RestorePasswordDTO restorePasswordDTO) {
+    public ResponseEntity<RestorePasswordResponseDTO> restorePassword(
+            @RequestBody
+            @Validated RestorePasswordDTO restorePasswordDTO
+    ) {
 
-        userService.restorePassword(restorePasswordDTO);
+        RestorePasswordResponseDTO restorePasswordUri = userService.restorePassword(restorePasswordDTO);
+
+        return ResponseEntity.ok(restorePasswordUri);
+    }
+
+    @PostMapping(Routes.USER_RESTORE_PASSWORD_UPDATE_ROUTE)
+    public ResponseEntity<MessageDTO> restorePasswordUpdate(
+            @RequestParam
+            String token,
+            @RequestBody
+            @Validated
+            UpdateRestorePasswordDTO updateRestorePasswordDTO
+    ) {
+
+        userService.updateUserPasswordByLogin(updateRestorePasswordDTO, token);
 
         return ResponseEntity.ok(new MessageDTO(Message.SUCCESS_MESSAGE));
     }

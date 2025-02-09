@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RestorePasswordDTO {
+public class UpdateRestorePasswordDTO {
 
     @NotNull
     @NotEmpty
-    private String email;
+    private String newPassword;
 }

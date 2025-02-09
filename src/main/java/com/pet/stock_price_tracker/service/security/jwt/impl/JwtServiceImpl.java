@@ -35,7 +35,11 @@ public class JwtServiceImpl implements JwtService {
                 .addClaims(claims)
                 .setSubject(login)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtSecretProperties.getAccessExpirationDate()))
+                .setExpiration(
+                        new Date(
+                                System.currentTimeMillis() + jwtSecretProperties.getAccessExpirationDate()
+                        )
+                )
                 .signWith(jwtSecretProperties.getSecretKey())
                 .compact();
     }
@@ -86,5 +90,19 @@ public class JwtServiceImpl implements JwtService {
         }
 
         return permissions;
+    }
+
+    @Override
+    public String generateRestorePasswordToken(String login) {
+        return Jwts.builder()
+                .setSubject(login)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(
+                        new Date(
+                                System.currentTimeMillis() + jwtSecretProperties.getRestorePasswordExpirationDate()
+                        )
+                )
+                .signWith(jwtSecretProperties.getSecretKey())
+                .compact();
     }
 }

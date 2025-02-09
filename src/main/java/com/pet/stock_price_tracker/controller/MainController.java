@@ -32,4 +32,9 @@ public class MainController {
     public String restore() {
         return Pages.RESTORE_PAGE;
     }
+
+    @GetMapping(Routes.USER_RESTORE_PASSWORD_UPDATE_ROUTE)
+    public String update() {
+        return Pages.UPDATE_AFTER_RESTORE_PASSWORD_PAGE;
+    }
 }

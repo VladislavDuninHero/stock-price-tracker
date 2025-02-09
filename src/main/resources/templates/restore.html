@@ -25,6 +25,9 @@
                             id="reset-password-field"
                             placeholder="email"
                     >
+                    <div class="restore-password-form__error-container">
+
+                    </div>
                     <article class="restore-password-form__restore-password-form-controllers">
                         <button class="restore-password-form-controllers__send-mail-button">Send</button>
                         <a class="restore-password-form-controllers__redirect-link" href="login">Sign in</a>
@@ -35,5 +38,7 @@
         </main>
         <footer th:insert="~{footerWithUserLinks :: footer-with-user-links}"></footer>
     </div>
+
+    <script type="module" th:src="@{/js/restore/RestorePassword.js}"></script>
 </body>
 </html>
