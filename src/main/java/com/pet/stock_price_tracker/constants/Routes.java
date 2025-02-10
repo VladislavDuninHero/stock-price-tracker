@@ -9,6 +9,7 @@ public final class Routes {
     public static final String LOGOUT_ROUTE = "/logout";
     public static final String USER_RESTORE_PASSWORD_ROUTE = "/restore";
     public static final String USER_RESTORE_PASSWORD_UPDATE_ROUTE = "/restore/update";
+    public static final String PROFILE_ROUTE = "/profile";
 
     public static final String API_USER_REGISTRATION_ROUTE = "/api/v1/user/registration";
     public static final String API_USER_LOGIN_ROUTE = "/api/v1/user/login";

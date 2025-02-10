@@ -37,4 +37,9 @@ public class MainController {
     public String update() {
         return Pages.UPDATE_AFTER_RESTORE_PASSWORD_PAGE;
     }
+
+    @GetMapping(Routes.PROFILE_ROUTE)
+    public String profile() {
+        return Pages.PROFILE;
+    }
 }
