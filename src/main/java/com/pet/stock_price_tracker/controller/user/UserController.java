@@ -6,6 +6,7 @@ import com.pet.stock_price_tracker.controller.MainController;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
 import com.pet.stock_price_tracker.dto.security.RefreshAccessTokenDTO;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
+import com.pet.stock_price_tracker.dto.user.info.UserInfoDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
@@ -15,6 +16,7 @@ import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordResponseDTO;
 import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
 import com.pet.stock_price_tracker.service.user.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,5 +84,14 @@ public class UserController {
         userService.updateUserPasswordByLogin(updateRestorePasswordDTO, token);
 
         return ResponseEntity.ok(new MessageDTO(Message.SUCCESS_MESSAGE));
+    }
+
+    @GetMapping(Routes.PROFILE_ROUTE)
+    public ResponseEntity<String> profile() {
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        UserInfoDTO userInfoDTO = userService.getUserInfo(login);
+
+        return null;
     }
 }
