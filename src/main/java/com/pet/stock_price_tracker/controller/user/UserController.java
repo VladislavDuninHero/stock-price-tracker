@@ -15,6 +15,8 @@ import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordDTO;
 import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordResponseDTO;
 import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
 import com.pet.stock_price_tracker.service.user.UserService;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
@@ -47,6 +49,22 @@ public class UserController {
         UserResponseLoginDTO user = userService.login(userLoginDTO);
 
         return ResponseEntity.ok().body(user);
+    }
+
+    @PutMapping(Routes.UPDATE_USER_ROUTE)
+    public ResponseEntity<UserResponseDTO> update(@RequestBody @Validated UserDTO userDTO) {
+
+        UserResponseDTO userResponseDTO = userService.updateUser(userDTO);
+
+        return ResponseEntity.ok(userResponseDTO);
+    }
+
+    @DeleteMapping(Routes.DELETE_USER_ROUTE)
+    public ResponseEntity<MessageDTO> delete(@RequestBody @NotNull @NotEmpty String login) {
+
+        userService.deleteUser(login);
+
+        return ResponseEntity.ok(new MessageDTO(Message.SUCCESS_MESSAGE));
     }
 
     @PostMapping(Routes.REFRESH_TOKEN_ROUTE)
@@ -87,11 +105,9 @@ public class UserController {
     }
 
     @GetMapping(Routes.PROFILE_ROUTE)
-    public ResponseEntity<String> profile() {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+    public ResponseEntity<UserInfoDTO> profile(@RequestParam @NotEmpty @NotNull String token) {
+        UserInfoDTO userInfoDTO = userService.getUserInfo(token);
 
-        UserInfoDTO userInfoDTO = userService.getUserInfo(login);
-
-        return null;
+        return ResponseEntity.ok().body(userInfoDTO);
     }
 }

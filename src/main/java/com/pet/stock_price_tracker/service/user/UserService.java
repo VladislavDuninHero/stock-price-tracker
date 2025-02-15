@@ -11,11 +11,12 @@ import com.pet.stock_price_tracker.dto.user.restore.RestorePasswordResponseDTO;
 import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
 import com.pet.stock_price_tracker.entity.User;
 
-import java.net.URI;
 import java.util.List;
 
 public interface UserService {
     UserResponseDTO createUser(UserDTO userDTO);
+    UserResponseDTO updateUser(UserDTO userDTO);
+    void deleteUser(String login);
     UserResponseLoginDTO login(UserLoginDTO userLoginDTO);
     UserResponseDTO findUserByLogin(String login);
     JwtDTO refreshToken(String refreshToken);
@@ -24,5 +25,5 @@ public interface UserService {
     User findUserEntityByEmail(String email);
     RestorePasswordResponseDTO restorePassword(RestorePasswordDTO restorePasswordDTO);
     void updateUserPasswordByLogin(UpdateRestorePasswordDTO updateRestorePasswordDTO, String token);
-    UserInfoDTO getUserInfo(String login);
+    UserInfoDTO getUserInfo(String token);
 }

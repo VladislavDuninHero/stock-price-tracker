@@ -10,6 +10,8 @@ public final class Routes {
     public static final String USER_RESTORE_PASSWORD_ROUTE = "/restore";
     public static final String USER_RESTORE_PASSWORD_UPDATE_ROUTE = "/restore/update";
     public static final String PROFILE_ROUTE = "/profile";
+    public static final String DELETE_USER_ROUTE = "/delete";
+    public static final String UPDATE_USER_ROUTE = "/update";
 
     public static final String API_USER_REGISTRATION_ROUTE = "/api/v1/user/registration";
     public static final String API_USER_LOGIN_ROUTE = "/api/v1/user/login";
@@ -18,6 +20,8 @@ public final class Routes {
     public static final String API_USER_ROUTE = "/api/v1/user";
     public static final String API_USER_RESTORE_PASSWORD_ROUTE = "/api/v1/user/restore";
     public static final String API_USER_RESTORE_PASSWORD_UPDATE_ROUTE = "/api/v1/user/restore/update";
+    public static final String API_DELETE_USER_ROUTE = "/api/v1/user/delete";
+    public static final String API_UPDATE_USER_ROUTE = "/api/v1/user/update";
 
     public static final String API_V1_TRACKER_ROUTE = "/api/v1/tracker";
     public static final String STOCK_TICKER_SAVE_ROUTE = "/save";
