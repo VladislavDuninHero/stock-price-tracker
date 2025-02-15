@@ -6,6 +6,7 @@ import com.pet.stock_price_tracker.constants.MailConstant;
 import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.controller.MainController;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
+import com.pet.stock_price_tracker.dto.user.info.UserInfoDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
@@ -28,9 +29,11 @@ import io.jsonwebtoken.Claims;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeUtility;
+import org.apache.tomcat.util.descriptor.web.ContextHandler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +93,30 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
 
         return userMapper.toDTO(savedUser);
+    }
+
+    @Override
+    public UserResponseDTO updateUser(UserDTO userDTO) {
+        userRegistrationValidationManager.validate(userDTO);
+
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = findUserEntityByLogin(login);
+
+        user.setLogin(userDTO.getLogin());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setEmail(userDTO.getEmail());
+
+        User updated = userRepository.save(user);
+
+        return userMapper.toDTO(updated);
+    }
+
+    @Override
+    public void deleteUser(String login) {
+        User user = findUserEntityByLogin(login);
+
+        userRepository.delete(user);
     }
 
     @Override
@@ -184,5 +211,14 @@ public class UserServiceImpl implements UserService {
         );
 
         userRepository.save(user);
+    }
+
+    @Override
+    public UserInfoDTO getUserInfo(String token) {
+        String login = jwtService.getLoginFromToken(token);
+
+        User user = findUserEntityByLogin(login);
+
+        return new UserInfoDTO(login, user.getEmail());
     }
 }

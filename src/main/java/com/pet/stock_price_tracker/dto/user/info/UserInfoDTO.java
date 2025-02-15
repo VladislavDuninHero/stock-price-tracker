@@ -1,4 +1,4 @@
-package com.pet.stock_price_tracker.dto.user.registration;
+package com.pet.stock_price_tracker.dto.user.info;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDTO {
-    private Long id;
+public class UserInfoDTO {
     private String login;
     private String email;
 }

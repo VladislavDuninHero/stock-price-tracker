@@ -7,6 +7,7 @@ import com.pet.stock_price_tracker.constants.OfficialProperties;
 import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.error.UserErrorDTO;
 import com.pet.stock_price_tracker.enums.ErrorCode;
+import com.pet.stock_price_tracker.exception.UserNotFoundException;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -23,6 +24,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -148,6 +150,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                 UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.EXPIRED_TOKEN.name(), e.getMessage());
+                response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
+
+                return;
+            } catch (UsernameNotFoundException e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                UserErrorDTO userErrorDTO = new UserErrorDTO(ErrorCode.INVALID_TOKEN.name(), e.getMessage());
                 response.getWriter().write(objectMapper.writeValueAsString(userErrorDTO));
 
                 return;
