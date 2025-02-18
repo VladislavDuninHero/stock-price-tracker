@@ -4,7 +4,6 @@ import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.properties.ApplicationProperties;
 import com.pet.stock_price_tracker.service.security.jwt.JwtService;
 import com.pet.stock_price_tracker.service.utils.uri.restore.RestorePasswordService;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;

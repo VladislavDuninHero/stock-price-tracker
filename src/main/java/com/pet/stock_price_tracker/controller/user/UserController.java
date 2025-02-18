@@ -2,7 +2,6 @@ package com.pet.stock_price_tracker.controller.user;
 
 import com.pet.stock_price_tracker.constants.Message;
 import com.pet.stock_price_tracker.constants.Routes;
-import com.pet.stock_price_tracker.controller.MainController;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
 import com.pet.stock_price_tracker.dto.security.RefreshAccessTokenDTO;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
@@ -18,7 +17,6 @@ import com.pet.stock_price_tracker.service.user.UserService;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +36,7 @@ public class UserController {
     @PostMapping(Routes.REGISTRATION_ROUTE)
     public ResponseEntity<UserResponseDTO> registration(@RequestBody @Validated UserDTO userDTO) {
 
-        UserResponseDTO user = userService.createUser(userDTO);;
+        UserResponseDTO user = userService.createUser(userDTO);
 
         return ResponseEntity.created(URI.create(Routes.LOGIN_ROUTE)).body(user);
     }

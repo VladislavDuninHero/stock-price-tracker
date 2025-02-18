@@ -1,6 +1,5 @@
 package com.pet.stock_price_tracker.service.user.roles.factory.impl;
 
-import com.pet.stock_price_tracker.entity.Permission;
 import com.pet.stock_price_tracker.enums.PermissionType;
 import com.pet.stock_price_tracker.enums.Roles;
 import com.pet.stock_price_tracker.service.user.roles.factory.RolePermissionsFactory;

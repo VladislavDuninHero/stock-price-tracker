@@ -10,7 +10,6 @@ import com.pet.stock_price_tracker.properties.PolygonIntegrationProperties;
 import com.pet.stock_price_tracker.service.integration.service.PolygonService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Service

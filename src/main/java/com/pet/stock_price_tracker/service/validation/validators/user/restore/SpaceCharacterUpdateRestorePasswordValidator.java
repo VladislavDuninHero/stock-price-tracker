@@ -1,7 +1,6 @@
 package com.pet.stock_price_tracker.service.validation.validators.user.restore;
 
 import com.pet.stock_price_tracker.constants.ExceptionMessage;
-import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
 import com.pet.stock_price_tracker.exception.SpaceSymbolException;
 import com.pet.stock_price_tracker.service.validation.validators.BaseValidator;
