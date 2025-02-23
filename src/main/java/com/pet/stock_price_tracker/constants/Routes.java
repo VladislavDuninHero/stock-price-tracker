@@ -31,6 +31,6 @@ public final class Routes {
     public static final String ACTUATOR_PROMETHEUS_ROUTE = "/actuator/prometheus";
 
     public static final String ADMIN_ROUTE = "/api/v1/admin";
-    public static final String ADMIN_CREATE_USER_ROUTE = "/create";
+    public static final String ADMIN_CREATE_USER_ROUTE = "/user/create";
     public static final String ADMIN_API_CREATE_USER_ROUTE = "/api/v1/admin/create";
 }

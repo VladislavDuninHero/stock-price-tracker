@@ -5,6 +5,7 @@ import com.pet.stock_price_tracker.constants.Routes;
 import com.pet.stock_price_tracker.dto.security.JwtDTO;
 import com.pet.stock_price_tracker.dto.security.RefreshAccessTokenDTO;
 import com.pet.stock_price_tracker.dto.ticker.MessageDTO;
+import com.pet.stock_price_tracker.dto.user.delete.DeleteUserDTO;
 import com.pet.stock_price_tracker.dto.user.info.UserInfoDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
@@ -17,6 +18,7 @@ import com.pet.stock_price_tracker.service.user.UserService;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,9 +60,10 @@ public class UserController {
     }
 
     @DeleteMapping(Routes.DELETE_USER_ROUTE)
-    public ResponseEntity<MessageDTO> delete(@RequestBody @NotNull @NotEmpty String login) {
+    @PreAuthorize("hasAuthority('DELETE_USER_PERMISSION')")
+    public ResponseEntity<MessageDTO> delete(@RequestBody DeleteUserDTO deleteUserDTO) {
 
-        userService.deleteUser(login);
+        userService.deleteUser(deleteUserDTO.getLogin());
 
         return ResponseEntity.ok(new MessageDTO(Message.SUCCESS_MESSAGE));
     }
@@ -103,6 +106,7 @@ public class UserController {
     }
 
     @GetMapping(Routes.PROFILE_ROUTE)
+    @PreAuthorize("hasAuthority('GET_USER_PROFILE_PERMISSION')")
     public ResponseEntity<UserInfoDTO> profile(@RequestParam @NotEmpty @NotNull String token) {
         UserInfoDTO userInfoDTO = userService.getUserInfo(token);
 

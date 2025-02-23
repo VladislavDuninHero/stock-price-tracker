@@ -1,6 +1,7 @@
 package com.pet.stock_price_tracker.config;
 
 import com.pet.stock_price_tracker.client.dto.polygon.request.TickerRequestDTO;
+import com.pet.stock_price_tracker.dto.admin.AdminCreateUserDTO;
 import com.pet.stock_price_tracker.dto.user.login.UserLoginDTO;
 import com.pet.stock_price_tracker.dto.user.registration.UserDTO;
 import com.pet.stock_price_tracker.dto.user.restore.UpdateRestorePasswordDTO;
@@ -22,13 +23,15 @@ public class ValidationConfig {
     private final List<BaseValidator<UserLoginDTO>> userLoginValidators;
     private final List<BaseValidator<TickerRequestDTO>> tickerRequestValidators;
     private final List<BaseValidator<UpdateRestorePasswordDTO>> updateRestorePasswordValidators;
+    private final List<BaseValidator<AdminCreateUserDTO>> adminCreateUserValidators;
 
     public ValidationConfig(
             ValidationConfigurable configurator,
             List<BaseValidator<UserDTO>> userRegistrationValidators,
             List<BaseValidator<UserLoginDTO>> userLoginValidators,
             List<BaseValidator<TickerRequestDTO>> tickerRequestValidators,
-            List<BaseValidator<UpdateRestorePasswordDTO>> updateRestorePasswordValidators
+            List<BaseValidator<UpdateRestorePasswordDTO>> updateRestorePasswordValidators,
+            List<BaseValidator<AdminCreateUserDTO>> adminCreateUserValidators
     ) {
         this.configurator = configurator;
 
@@ -36,6 +39,7 @@ public class ValidationConfig {
         this.userLoginValidators = userLoginValidators;
         this.tickerRequestValidators = tickerRequestValidators;
         this.updateRestorePasswordValidators = updateRestorePasswordValidators;
+        this.adminCreateUserValidators = adminCreateUserValidators;
     }
 
     @PostConstruct
@@ -56,5 +60,10 @@ public class ValidationConfig {
     @PostConstruct
     public List<BaseValidator<UpdateRestorePasswordDTO>> configurePasswordRestoreValidators() {
         return configurator.config(updateRestorePasswordValidators);
+    }
+
+    @PostConstruct
+    public List<BaseValidator<AdminCreateUserDTO>> configureAdminCreateUserValidators() {
+        return configurator.config(adminCreateUserValidators);
     }
 }
