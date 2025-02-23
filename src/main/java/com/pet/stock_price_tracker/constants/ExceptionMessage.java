@@ -19,4 +19,5 @@ public final class ExceptionMessage {
     public static final String LOGIN_LENGTH_IS_INVALID = "Login must be between 1 and 64 symbols";
     public static final String PASSWORD_LENGTH_IS_INVALID = "Password must be between 6 and 64 symbols";
     public static final String MISSING_PARAMETER_EXCEPTION = "Missing required parameters";
+    public static final String ROLE_IS_INVALID_EXCEPTION = "Role is invalid";
 }

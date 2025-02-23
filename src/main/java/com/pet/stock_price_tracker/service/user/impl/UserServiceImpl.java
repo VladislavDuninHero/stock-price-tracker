@@ -112,7 +112,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String login) {
         User user = findUserEntityByLogin(login);
-
         userRepository.delete(user);
     }
 
