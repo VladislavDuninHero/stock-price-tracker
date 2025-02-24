@@ -1,6 +1,8 @@
 package com.pet.stock_price_tracker.service.admin.impl;
 
 import com.pet.stock_price_tracker.dto.admin.AdminCreateUserDTO;
+import com.pet.stock_price_tracker.dto.admin.AdminLoginDTO;
+import com.pet.stock_price_tracker.dto.user.login.UserResponseLoginDTO;
 import com.pet.stock_price_tracker.entity.User;
 import com.pet.stock_price_tracker.enums.Roles;
 import com.pet.stock_price_tracker.repository.UserRepository;
@@ -19,22 +21,27 @@ public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
     private final AdminUserRegistrationRequestValidationManager adminUserRegistrationRequestValidationManager;
-    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
 
     public AdminServiceImpl(
             UserRepository userService,
             AdminUserRegistrationRequestValidationManager adminUserRegistrationRequestValidationManager,
-            UserMapper userMapper,
             PasswordEncoder passwordEncoder,
             RoleService roleService
     ) {
         this.userRepository = userService;
         this.adminUserRegistrationRequestValidationManager = adminUserRegistrationRequestValidationManager;
-        this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
+    }
+
+    @Override
+    public UserResponseLoginDTO login(AdminLoginDTO adminLoginDTO) {
+
+
+
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.pet.stock_price_tracker.config;
 
+import com.pet.stock_price_tracker.config.filter.JwtAdminAuthenticationFilter;
 import com.pet.stock_price_tracker.config.filter.JwtAuthenticationFilter;
 import com.pet.stock_price_tracker.constants.Cookies;
 import com.pet.stock_price_tracker.constants.Routes;
@@ -23,11 +24,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAdminAuthenticationFilter jwtAdminAuthenticationFilter;
 
     public SecurityConfig(
-            JwtAuthenticationFilter jwtAuthenticationFilter
+            JwtAuthenticationFilter jwtAuthenticationFilter,
+            JwtAdminAuthenticationFilter jwtAdminAuthenticationFilter
     ) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwtAdminAuthenticationFilter = jwtAdminAuthenticationFilter;
     }
 
     @Bean
@@ -57,6 +61,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAdminAuthenticationFilter, JwtAuthenticationFilter.class)
                 .logout(logout -> logout
                         .logoutUrl(Routes.LOGOUT_ROUTE)
                         .logoutSuccessUrl(Routes.LOGIN_ROUTE)
