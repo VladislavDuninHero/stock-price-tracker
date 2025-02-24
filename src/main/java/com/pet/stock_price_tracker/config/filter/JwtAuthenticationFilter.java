@@ -67,6 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         || request.getRequestURI().startsWith("/css/")
                         || request.getRequestURI().startsWith("/js/")
                         || request.getRequestURI().startsWith("/images/")
+                        || requestPath.contains(Routes.ADMIN_ROUTE)
 
         ) {
             filterChain.doFilter(request, response);
